@@ -1,0 +1,86 @@
+@media (min-width: 769px) {
+
+body {
+    background-image: url('/images/site/small_check.jpg');
+    background-repeat: repeat;
+}
+  
+.site-wrapper {
+    max-width: 1000px;
+    margin: 2em auto;
+    border: 2px solid var(--dark-knight);
+    border-radius: 1%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+    
+.main-wrapper {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    grid-gap: 1em;
+    grid-template-areas:
+        "hero hero hero hero hero hero hero hero hero hero hero hero"
+        "upgrades upgrades upgrades upgrades upgrades upgrades reviews reviews reviews reviews reviews reviews"; 
+}
+      
+.hero {
+    grid-area: hero;
+}
+  
+.features {
+    font-size: 1.2em;
+    padding: 10px;
+    left: 20px;
+    top: 60px;
+}
+      
+.reviews {
+    grid-area: reviews;
+}
+  
+.upgrades {
+    grid-area: upgrades;
+}
+      
+.upgrades-grid {
+    grid-area: upgrades;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+      
+nav button {display: none;}
+    
+nav ul#primaryNav {
+    display: flex;
+    justify-content: center;
+    border-left: 1px solid rgba(0,0,0,.3);
+}
+    
+nav ul li a {
+    border: none;
+    border-right: 1px solid rgba(0,0,0,.3);
+}
+    
+nav ul {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+} 
+    
+nav a {
+    font-size: 1.1rem;
+}
+    
+nav a:hover {
+    background-color: var(--silver-screen);
+    color: var(--silver-screen); 
+    --d: 75%;
+}
+  
+nav ul li a {
+    padding: .75rem;
+}
+}

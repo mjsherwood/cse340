@@ -1,6 +1,243 @@
 /******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+*, *:before, *:after {
   box-sizing: border-box;
+}
+
+/******* Universal **********************/
+/* Color Palette */
+:root {
+  --dark-knight: #0B3D91;
+  --hollywood-red: #FF2F00;
+  --silver-screen: #C0C0C0;
+  --premiere-yellow: #FFC107;
+  --studio-black: #1B1B1B;
+}
+
+html {
+  font-size: 16px;
+}
+
+body, p {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bebas Neue', sans-serif;
+  margin-top: 0;
+}
+
+h2, h3, h4, h5, h6, a, .btn {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn {
+  background-color: var(--dark-knight);
+  color: white;
+  padding: 0.8em 1.5em;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background-color: var(--hollywood-red);
+}
+
+header, main, footer {
+  background-color: white;
+}
+
+.content-container {
+  background-color: white;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/******* Layout Grid ********************/
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 1em;
+}
+
+/******* Header *************************/
+header {
+  grid-column: 1 / 13;
+  background-color: #fff;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 0.5rem;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+}
+
+/******* Navigation *********************/
+.navigation {
+  grid-column: 1 / 13;
+  background-color: var(--hollywood-red);
+  color: white;
+}
+
+nav button {
+  margin: .2rem 2vw;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #fff;
+}
+nav {
+  background-color: var(--dark-knight);
+  margin: 0 auto .25rem auto;
+}
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+nav ul li a {
+  display: block;
+  padding: .8rem 2vw;
+  text-decoration: none;
+  color: #fff;
+  border-top: 1px solid rgba(0,0,0,0.5);
+  background: linear-gradient(90deg, transparent, var(--silver-screen), transparent) bottom /
+  var(--d, 0) 3px no-repeat;
+  transition: 0.5s;
+  font-family: 'Roboto Condensed', sans-serif;
+}  
+
+nav ul li.active a {
+  background-color: rgba(0,0,0,0.2);
+  color: #fff;
+}
+nav ul li a:hover {
+  background-color: rgba(0,0,0,0.3);
+  color: var(--hollywood-red);
+}
+nav ul {
+  display: none;
+}
+nav ul.open {
+  display: block;
+}
+
+#hamburgerBtn span:nth-child(1) {display: block;}
+#hamburgerBtn span:nth-child(2) {display: none;}
+
+#hamburgerBtn.open span:nth-child(1) {display: none;}
+#hamburgerBtn.open span:nth-child(2) {display: block;}
+
+/******* Main ***************************/
+.main-wrapper {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 1em;
+  grid-template-areas:
+    "hero"
+    "review"
+    "upgrades";
+  padding: 10px;
+}
+
+.hero h1 {
+  margin-top: 0px;
+}
+
+.hero {
+  grid-area: hero;
+  width: 100%;
+  height: auto;
+  margin-bottom: 2em;
+  position: relative;
+}
+
+.hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.features {
+  position: absolute;
+  top: 40px;
+  left: 0px;
+  color: #ffffff;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.features h2,
+.features p,
+.features .btn {
+  font-size: 0.8em;
+}
+
+.review {
+  grid-area: review;
+}
+
+.upgrades-grid {
+  grid-area: upgrades;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 20px;
+  max-width: 100%;
+}
+
+.upgrade-item {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.upgrade-item img {
+  height: auto;
+  align-self: center;
+  display: block;
+  max-width: 100%;
+}
+
+.upgrade-item a {
+  display: block;
+  margin-top: 10px;
+  color: var(--classic-red);
+  text-decoration: none;
+}
+
+/******* Footer *************************/
+.footer {
+  background-color: var(--studio-black);
+  color: white;
+  padding: 1em;
+  margin: 1em;
+}
+
+.copyright {
+  margin: 1em;
 }
