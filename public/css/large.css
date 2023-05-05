@@ -83,4 +83,10 @@ nav a:hover {
 nav ul li a {
     padding: .75rem;
 }
+
+
+/******* Category Page ******************/
+#inv-display {
+    grid-template-columns: repeat(3, 1fr); /* Adjust the number 3 for the desired number of columns */
+}
 }

@@ -248,3 +248,25 @@ nav ul li {
 .copyright {
   margin: 1em;
 }
+
+/******* Category Page ******************/
+.vehicles-container {
+  margin: 1em;
+}
+
+.card {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#inv-display {
+  list-style-type: none;
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+

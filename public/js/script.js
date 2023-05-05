@@ -16,7 +16,7 @@ var currentYear = new Date().getFullYear();
 document.querySelector("#year").innerHTML = currentYear;
 
 // Get the last modified date of the index.html file
-var lastModified = document.lastModified;
+//var lastModified = document.lastModified;
 
 // Set the last modified date in the footer
-document.querySelector("#lastUpdated").innerHTML = lastModified;
+//document.querySelector("#lastUpdated").innerHTML = lastModified;
