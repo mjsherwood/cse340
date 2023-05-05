@@ -107,11 +107,12 @@ nav {
   background-color: var(--dark-knight);
   margin: 0 auto .25rem auto;
 }
-nav ul {
-  list-style-type: none;
+nav ul#primaryNav {
+  display: none;
   padding: 0;
   margin: 0;
 }
+
 nav ul li a {
   display: block;
   padding: .8rem 2vw;
@@ -135,8 +136,14 @@ nav ul li a:hover {
 nav ul {
   display: none;
 }
-nav ul.open {
+nav ul#primaryNav.open {
   display: block;
+}
+
+nav ul li {
+  list-style-type: none;
+  padding: 0;
+  margin:0;
 }
 
 #hamburgerBtn span:nth-child(1) {display: block;}
