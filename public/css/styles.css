@@ -270,3 +270,42 @@ nav ul li {
   gap: 20px;
 }
 
+/******* Detail Page ********************/
+
+.vehicle {
+  max-width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.vehicle-image, .vehicle-details, .vehicle-description {
+  width: 100%;
+}
+
+.vehicle-image {
+  position: relative;
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.vehicle-details, .vehicle-description {
+  padding: 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.vehicle-description {
+  background-color: #f1f1f1;
+  text-align: justify;
+}

@@ -1,6 +1,5 @@
 const invModel = require("../models/inventory-model")
-const utilities = require("../utilities/")
-
+const utilities = require("../utilities/index")
 const invCont = {}
 
 /* ***************************
@@ -27,4 +26,22 @@ invCont.buildByClassificationID = async function (req, res, next) {
     }
 }
 
+invCont.getVehicleById = async (req, res, next) => {
+    try {
+        const inv_id = req.params.id;
+        console.log('inv_id:', inv_id);
+        const vehicle = await invModel.getVehicleById(inv_id);
+        const vehicleHtml = await utilities.buildVehicleHtml(vehicle);
+        let nav = await utilities.getNav();  
+        res.render('inventory/vehicle', {
+            title: `${vehicle.inv_make} ${vehicle.inv_model}`,
+            vehicleHtml,
+            nav,
+        });
+    } catch (err) {
+        next(err);
+    }
+}
+  
 module.exports = invCont;
+
