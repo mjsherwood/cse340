@@ -1,6 +1,6 @@
 const triggerError = async (req, res, next) => {
   try {
-    // math formula that intentionally throws a division by zero error
+    // An example math formula that intentionally throws a division by zero error
     const a = 10;
     const b = 0;
     if (b === 0) {
