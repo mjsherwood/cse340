@@ -3,7 +3,7 @@ const pool = require("../database/")
 /* ***************************
  * Get vehicle details
  * ************************** */
-const getVehicleById = async (inv_id) => {
+async function getVehicleById(inv_id) {
     const result = await pool.query('SELECT * FROM public.inventory WHERE inv_id = $1', [inv_id]);
     console.log("Query result:", result.rows); 
     return result.rows[0];

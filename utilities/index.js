@@ -63,7 +63,7 @@ Util.buildClassificationGrid = async function(data){
 /* ****************************************
  * Build vehicle pdp
  * **************************************** */
-const buildVehicleHtml = async (vehicle) => {
+Util.buildVehicleHtml = async function(vehicle) {
     const { inv_make, inv_model, inv_year, inv_price, inv_miles, inv_image, inv_description, inv_color } = vehicle;
     const priceFormatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(inv_price);
     const mileageFormatted = new Intl.NumberFormat('en-US').format(inv_miles);
@@ -96,5 +96,4 @@ Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)
 
 module.exports = {
     ...Util,
-    buildVehicleHtml
 };
