@@ -10,9 +10,11 @@ const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 const baseController = require("./controllers/base-controller.js")
+const accountRoute = require("./routes/accountRoute");
 const utilities = require('./utilities');
 const errorController = require('./controllers/errorController')
 const session = require("express-session")
+const bodyParser = require("body-parser")
 const pool = require('./database/')
 
 /* ************************
@@ -28,6 +30,9 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionID',
 }))
+
+app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
@@ -53,6 +58,9 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", require("./routes/inventory-route"))
+
+// Account routes
+app.use("/account", require("./routes/accountRoute"))
 
 /* ***********************
  * Error Routes

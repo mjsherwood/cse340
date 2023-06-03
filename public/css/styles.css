@@ -307,3 +307,55 @@ nav ul li {
 .vehicle-description {
   background-color: #f1f1f1;
 }
+
+/******* Login Page ********************/
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  margin-bottom: 5px;
+  font-family: 'Open Sans', sans-serif;
+  color: var(--studio-black);
+}
+
+.login-form input {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  border: 1px solid var(--silver-screen);
+}
+
+.login-form button {
+  padding: 10px;
+  font-size: 18px;
+  background-color: var(--dark-knight);
+  color: var(--silver-screen);
+  cursor: pointer;
+  border: none;
+  font-family: 'Roboto Condensed', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: var(--hollywood-red);
+}
+
+.form-container p {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--studio-black);
+}
+
+.form-container a {
+  color: var(--dark-knight);
+  font-family: 'Roboto Condensed', sans-serif;
+}
