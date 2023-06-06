@@ -85,21 +85,6 @@ Util.buildVehicleHtml = async function(vehicle) {
       </div>
     `;
 };
-
-/* **********************************
- * Deliver login view
- * **********************************/
-//Util.buildLogin = async (req, res, next) => {
-  //const login_id = req.params.login_id;
-  //console.log('login_id:', login_id);
-//  let nav = await Util.getNav();  
-//  res.render('/account/login', {
-//      title: `Login Page`,
-//      nav,
-//  });
-
-//}
-
   
 
 /* ******************************

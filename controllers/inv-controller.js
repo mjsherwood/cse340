@@ -1,5 +1,5 @@
 const invModel = require("../models/inventory-model")
-const utilities = require("../utilities/index")
+const Util = require("../utilities/index")
 const invCont = {}
 
 /* ***************************
@@ -13,8 +13,8 @@ invCont.buildByClassificationID = async function (req, res, next) {
     console.log("Data: ", data);
     
     if (data && data.length > 0) {
-        const grid = await utilities.buildClassificationGrid(data);
-        let nav = await utilities.getNav();
+        const grid = await Util.buildClassificationGrid(data);
+        let nav = await Util.getNav();
         const className = data[0].classification_name;
         res.render("inventory/classification", {
             title: className + " vehicles",
@@ -31,8 +31,8 @@ invCont.getVehicleById = async (req, res, next) => {
         const inv_id = req.params.id;
         console.log('inv_id:', inv_id);
         const vehicle = await invModel.getVehicleById(inv_id);
-        const vehicleHtml = await utilities.buildVehicleHtml(vehicle);
-        let nav = await utilities.getNav();  
+        const vehicleHtml = await Util.buildVehicleHtml(vehicle);
+        let nav = await Util.getNav();  
         res.render('inventory/vehicle', {
             title: `${vehicle.inv_make} ${vehicle.inv_model}`,
             vehicleHtml,
@@ -42,6 +42,41 @@ invCont.getVehicleById = async (req, res, next) => {
         next(err);
     }
 }
+
+/* ************************************
+ * Deliver Inventory Add View
+ * ************************************/
+invCont.buildAddInv = async (req, res, next) => {
+    let nav = await Util.getNav();  
+    res.render('inventory/addinventory', {
+        title: "Add Inventory",
+        nav,
+    });
+}
+
+/* ************************************
+ * Deliver Management View
+ * ************************************/
+invCont.buildManagement = async (req, res, next) => {
+    let nav = await Util.getNav();  
+    res.render('inventory/management', {
+        title: "Management",
+        nav,
+    });
+}
+
+/* ************************************
+ * Deliver Classification Add View
+ * ************************************/
+invCont.buildAddClassification = async (req, res, next) => {
+    let nav = await Util.getNav();  
+    res.render('inventory/addclassification', {
+        title: "Add Classification",
+        nav,
+    });
+}
+
+
   
 module.exports = invCont;
 

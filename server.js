@@ -17,6 +17,7 @@ const session = require("express-session")
 const bodyParser = require("body-parser")
 const pool = require('./database/')
 
+
 /* ************************
  * Middleware
  * ************************/
@@ -58,6 +59,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", require("./routes/inventory-route"))
+
 
 // Account routes
 app.use("/account", require("./routes/accountRoute"))
