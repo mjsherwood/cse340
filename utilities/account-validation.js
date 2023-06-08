@@ -48,6 +48,38 @@ validate.registrationRules = () => {
     ]
   }
 
+validate.loginRules = () => {
+    return [
+      // valid email is required and cannot already exist in the DB
+      body("account_email")
+        .trim()
+        .isEmail()
+        .normalizeEmail() // refer to validator.js docs
+        .withMessage("A valid email is required.")
+        .custom(async (account_email) => {
+            const emailExists = await accountModel.checkExistingEmail(account_email)
+            console.log('Email exists:', emailExists);
+            if (!emailExists){
+            throw new Error("Sorry we do not have that username.")
+            }
+        }),
+  
+      // password is required and must not be empty
+      //body("account_password")
+      //  .trim()
+      //  .isStrongPassword({
+      //    minLength: 12,
+      //    minLowercase: 1,
+      //    minUppercase: 1,
+      //    minNumbers: 1,
+      //    minSymbols: 1,
+      //  })
+      //  .withMessage("Password does not meet requirements."),
+    ]
+}
+
+
+
 
  /* ******************************
  * Check data and return errors or continue to registration

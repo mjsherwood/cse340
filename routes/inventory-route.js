@@ -11,9 +11,9 @@ router.get('/detail/:id', Util.handleErrors(invController.getVehicleById));
 // Route to build Management Page
 router.get('/', Util.handleErrors(invController.buildManagement));
 // Route to build add classification page
-router.get('/addclassification', Util.handleErrors(invController.buildAddClassification));
-// Route to build add inventory page
 router.get('/addinventory', Util.handleErrors(invController.buildAddInv));
+// Route to build add inventory page
+router.get('/addclassification', Util.handleErrors(invController.buildAddClassification));
 
 
 module.exports = router;

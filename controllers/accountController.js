@@ -54,7 +54,6 @@ async function registerAccount(req, res) {
         account_firstname,
         account_lastname,
         account_email,
-        //account_password
         hashedPassword
     )
     if (regResult) {
