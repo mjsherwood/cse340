@@ -1,6 +1,6 @@
-<div class="registration-container">
+<div class="addinventory-container">
     <p>All fields are required.</p>
-    <form id="registerForm" action="/account/register" method="post">
+    <form id="addInventoryForm" action="/inv/addinventory" method="post">
         <fieldset>
             <label for="make">Make:</label>
             <input type="text" name="inv_make" id="make" required value="<%= locals.inv_make %>">
@@ -11,9 +11,9 @@
             <label for="description">Description</label>
             <input type="text" name="inv_description" id="description" required value="<%= locals.inv_description %>">
             <label for="image">Image URL</label>
-            <input type="url" name="inv_image" id="image" required value="<%= locals.inv_image %>">
+            <input type="text" name="inv_image" id="image" required value="<%= locals.inv_image %>">
             <label for="thumbnail">Thumbnail URL</label>
-            <input type="url" name="inv_thumbnail" id="thumbnail" required value="<%= locals.inv_thumbnail %>">
+            <input type="text" name="inv_thumbnail" id="thumbnail" required value="<%= locals.inv_thumbnail %>">
             <label for="price">Price:</label>
             <input type="number" name="inv_price" id="price" required value="<%= locals.inv_price %>">
             <label for="miles">Miles:</label>

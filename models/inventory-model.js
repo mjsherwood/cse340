@@ -34,19 +34,25 @@ async function getVehiclesByClassificationID(classification_id) {
     }
 }
 
-async function inputVehicle(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color){
+/* ***********************************
+ * Add New Inventory
+ * *********************************** */
+async function inputInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id){
     try {
-        const sql = "INSERT INTO account (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9 'Client') RETURNING *"
-        return await pool.query(sql, [inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color])
+        const sql = "INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *"
+        return await pool.query(sql, [inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id])
     } catch (error) {
         return error.message
     }
 }
 
-async function inputClassification(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color){
+/* ***********************************
+ * Add New Classification
+ * *********************************** */
+async function inputClassification(classification_id){
     try {
-        const sql = "INSERT INTO account (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9 'Client') RETURNING *"
-        return await pool.query(sql, [inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color])
+        const sql = "INSERT INTO classification (classification_id) VALUES ($1) RETURNING *"
+        return await pool.query(sql, [classification_id])
     } catch (error) {
         return error.message
     }
@@ -54,6 +60,6 @@ async function inputClassification(inv_make, inv_model, inv_year, inv_descriptio
 
 
 
-module.exports = {getClassifications, getVehiclesByClassificationID, getVehicleById, inputVehicle, inputClassification };
+module.exports = {getClassifications, getVehiclesByClassificationID, getVehicleById, inputInventory, inputClassification };
 
 

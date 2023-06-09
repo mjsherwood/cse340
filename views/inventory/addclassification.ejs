@@ -1,1 +1,11 @@
-Hello
+<div class="addclassification-container">
+    <p>All fields are required.</p>
+    <form id="addClassificationForm" action="/inv/addclassification" method="post">
+        <fieldset>
+            <label for="classification">Make:</label>
+            <input type="text" name="classification_name" id="classification" required value="<%= locals.classification_name %>">
+            </select>
+            <button type="submit">Add Classification</button>
+        </fieldset>
+    </form>
+</div>

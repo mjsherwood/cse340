@@ -1,8 +1,9 @@
 // Needed Resources
 const express = require('express')
 const router = new express.Router()
-const Util = require('../utilities/index.js')
+const Util = require('../utilities/')
 const invController = require('../controllers/inv-controller')
+const invValidate = require('../utilities/inventory-validation')
 
 // Route to build inventory by classification view
 router.get('/type/:classificationID', Util.handleErrors(invController.buildByClassificationID));
@@ -15,5 +16,9 @@ router.get('/addinventory', Util.handleErrors(invController.buildAddInv));
 // Route to build add inventory page
 router.get('/addclassification', Util.handleErrors(invController.buildAddClassification));
 
+router.post('/addinventory', 
+    //regValidate.registrationRules(), 
+    //regValidate.checkRegData, 
+    Util.handleErrors(invController.inputInventory));
 
 module.exports = router;

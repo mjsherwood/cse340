@@ -82,42 +82,50 @@ invCont.buildAddClassification = async (req, res, next) => {
 /* ************************************
  * Input Inventory
  * ************************************/
-async function registerAccount(req, res) {
+invCont.inputInventory = async (req, res) => {
+    console.log("Is inputinv working")
     let nav = await Util.getNav()
-    const { account_firstname, account_lastname, account_email, account_password } = req.body
-    // Hash the password before storing
-    let hashedPassword
-    try {
-        // regular password and cost (salt is generated automatically)
-        hashedPassword = await bcrypt.hashSync(account_password, 10)
-    } catch (error) {
-        req.flash("notice", 'Sorry, there was an error processing the registration.')
-        res.status(500).render("account/register", {
-            title: "Registration",
-            nav,
-            errors: null,
-        })
-    }
+    const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
 
-    const regResult = await accountModel.registerAccount(
-        account_firstname,
-        account_lastname,
-        account_email,
-        hashedPassword
+    // Hash the password before storing
+    //let hashedPassword
+    //try {
+        // regular password and cost (salt is generated automatically)
+    //    hashedPassword = await bcrypt.hashSync(account_password, 10)
+    //} catch (error) {
+    //    req.flash("notice", 'Sorry, there was an error processing the registration.')
+    //    res.status(500).render("account/register", {
+    //        title: "Registration",
+    //        nav,
+    //        errors: null,
+    //    })
+    //}
+
+    const regResult = await invModel.inputInventory(
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color,
+        classification_id
     )
     if (regResult) {
         req.flash(
             "notice",
-            `Congratulations, you\'re registered ${account_firstname}. Please log in.`
+            `Congratulations, ${inv_make} ${inv_model} Has been entered.`
             )
-            res.status(201).render("account/login", {
-                title: "Login",
+            res.status(201).render("inventory/addinventory", {
+                title: "Add Vehicle",
                 nav,
             })
     } else {
-        req.flash("notice", "Sorry, the registration failed.")
-        res.status(501).render("account/register", {
-            title: "Registration",
+        req.flash("notice", "Sorry, submission failed. Please Try Again.")
+        res.status(501).render("inventory/addinventory", {
+            title: "Add Vehicle",
             nav,
             errors: null,
         })
