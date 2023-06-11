@@ -117,3 +117,11 @@ body .vehicle-description {
     padding: 1em;
 }
 }
+
+/******* Forms ***********************/
+.form-page {
+    justify-content: center;
+  }
+.site-form {
+    max-width: 300px;
+}

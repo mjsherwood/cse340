@@ -308,34 +308,42 @@ nav ul li {
   background-color: #f1f1f1;
 }
 
-/******* Login Page ********************/
+/******* Forms ***********************/
+.form-page {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+
 .form-container {
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
   padding: 20px;
 }
 
-.login-form {
+.site-form {
   display: flex;
   flex-direction: column;
+  max-width: 100%;
+  min-width: 400px;
+  margin-left: 20px;
 }
 
-.login-form label {
+.site-form label {
   margin-bottom: 5px;
   font-family: 'Open Sans', sans-serif;
   color: var(--studio-black);
 }
 
-.login-form input {
+.site-form input {
   margin-bottom: 20px;
   padding: 10px;
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
   border: 1px solid var(--silver-screen);
+  width: 100%;
 }
 
-.login-form button {
+.site-form button {
   padding: 10px;
   font-size: 18px;
   background-color: var(--dark-knight);
@@ -344,9 +352,12 @@ nav ul li {
   border: none;
   font-family: 'Roboto Condensed', sans-serif;
   transition: background-color 0.3s ease;
+  min-width: 200px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.login-form button:hover {
+.site-form button:hover {
   background-color: var(--hollywood-red);
 }
 
