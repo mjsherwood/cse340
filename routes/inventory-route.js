@@ -17,8 +17,13 @@ router.get('/addinventory', Util.handleErrors(invController.buildAddInv));
 router.get('/addclassification', Util.handleErrors(invController.buildAddClassification));
 
 router.post('/addinventory', 
-    //regValidate.registrationRules(), 
-    //regValidate.checkRegData, 
+    invValidate.addInventoryRules(), 
+    invValidate.checkInvData, 
     Util.handleErrors(invController.inputInventory));
+
+router.post('/addclassification', 
+//classValidate.classificationRules(), 
+//classValidate.checkClassData, 
+Util.handleErrors(invController.inputClassification));
 
 module.exports = router;

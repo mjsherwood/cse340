@@ -3,7 +3,7 @@
     <form id="addClassificationForm" action="/inv/addclassification" method="post">
         <fieldset>
             <label for="classification">Make:</label>
-            <input type="text" name="classification_name" id="classification" required value="<%= locals.classification_name %>">
+            <input type="text" name="classification_name" id="classification" minlength="3" maxlength="20" pattern="[A-Z]+" placeholder="Please enter uppercase letters only" required value="<%= locals.classification_name %>">
             </select>
             <button type="submit">Add Classification</button>
         </fieldset>

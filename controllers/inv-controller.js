@@ -1,6 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = require("../utilities/index")
 const invCont = {}
+const { invResult } = require('express-validator')
 
 /* ***************************
  * Build vehicles by classification view
@@ -47,14 +48,14 @@ invCont.getVehicleById = async (req, res, next) => {
  * Deliver Inventory Add View
  * ************************************/
 invCont.buildAddInv = async (req, res, next) => {
-    const classificationsResult = await invModel.getClassifications();
-    const classifications = classificationsResult.rows;
     let nav = await Util.getNav();  
-    res.render('inventory/addinventory', {
-        title: "Add Inventory",
+    let classifications = await Util.getClassTypes()
+    res.render("inventory/addinventory", {
+        title: "Add New Inventory",
         nav,
-        classifications: classifications
-    });
+        classifications,
+        errors: null
+    })
 }
 
 /* ************************************
@@ -72,10 +73,10 @@ invCont.buildManagement = async (req, res, next) => {
  * Deliver Classification Add View
  * ************************************/
 invCont.buildAddClassification = async (req, res, next) => {
-    let nav = await Util.getNav();  
+    let nav = await Util.getNav();
     res.render('inventory/addclassification', {
         title: "Add Classification",
-        nav,
+        nav
     });
 }
 
@@ -83,53 +84,86 @@ invCont.buildAddClassification = async (req, res, next) => {
  * Input Inventory
  * ************************************/
 invCont.inputInventory = async (req, res) => {
-    console.log("Is inputinv working")
     let nav = await Util.getNav()
-    const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
-
-    // Hash the password before storing
-    //let hashedPassword
-    //try {
-        // regular password and cost (salt is generated automatically)
-    //    hashedPassword = await bcrypt.hashSync(account_password, 10)
-    //} catch (error) {
-    //    req.flash("notice", 'Sorry, there was an error processing the registration.')
-    //    res.status(500).render("account/register", {
-    //        title: "Registration",
-    //        nav,
-    //        errors: null,
-    //    })
-    //}
-
-    const regResult = await invModel.inputInventory(
-        inv_make,
-        inv_model,
-        inv_year,
-        inv_description,
-        inv_image,
-        inv_thumbnail,
-        inv_price,
-        inv_miles,
-        inv_color,
-        classification_id
+    const { 
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
+    } = req.body
+  
+    const invResult = await invModel.inputInventory(
+      
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
     )
-    if (regResult) {
+  
+    if (invResult) {
+      let nav = await  Util.getNav()
+  
+      req.flash(
+        "notice",
+        `Congratulations, you\'ve made a new ${inv_make} ${inv_model}.`
+      )
+      res.status(201).render("inventory/management", {
+        title: "Inventory Management",
+        nav,
+      })
+    } else {
+      let classifications = await Util.getClassTypes()
+      req.flash("notice", "Sorry, the new car creation failed.")
+      res.status(501).render("inventory/add-Inventory", {
+        title: "Add New Inventory",
+        nav,
+        classifications,
+        errors
+      })
+    }
+  }
+
+/* ************************************
+ * Input Classification
+ * ************************************/
+invCont.inputClassification = async (req, res) => {
+    console.log("Is inputclass working?")
+    let nav = await Util.getNav()
+    const { classification_name } = req.body
+
+    const classResult = await invModel.inputClassification(
+        classification_name
+    )
+    if (classResult) {
         req.flash(
             "notice",
-            `Congratulations, ${inv_make} ${inv_model} Has been entered.`
+            `Congratulations, ${classification_name} Has been entered.`
             )
-            res.status(201).render("inventory/addinventory", {
-                title: "Add Vehicle",
+            res.status(201).render("inventory/addclassification", {
+                title: "Add Classification",
                 nav,
             })
     } else {
         req.flash("notice", "Sorry, submission failed. Please Try Again.")
-        res.status(501).render("inventory/addinventory", {
-            title: "Add Vehicle",
+        res.status(501).render("inventory/addclassification", {
+            title: "Add Classification",
             nav,
             errors: null,
         })
     }
 }
+
 module.exports = invCont;
 

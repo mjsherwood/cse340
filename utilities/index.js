@@ -5,24 +5,29 @@ const Util = {}
  * Constructs the nav HTML unordered list
  * ************************* */
 Util.getNav = async function (req, res, next) {
-    let data = await invModel.getClassifications()
-    let list = '<button id="hamburgerBtn"><span>&#9776;</span><span>X</span></button>' 
-    list += '<ul id="primaryNav" class="primaryNav">'
-    list += '<li><a href="/" title="Home page">Home</a></li>'
-    data.rows.forEach((row) => {
-        list += "<li>"
-        list +=
-            '<a href="/inv/type/' +
-            row.classification_id +
-            '" title="See our inventory of ' +
-            row.classification_name +
-            ' vehicles">' +
-            row.classification_name +
-            "</a>"
-        list +- "</li>"
-    })
-    list += "</ul>"
-    return list
+  let data = await invModel.getClassifications()
+  console.log('Data:', data);
+  if (!data) {
+      console.log('No data returned from getClassifications.');
+      return;
+  }
+  let list = '<button id="hamburgerBtn"><span>&#9776;</span><span>X</span></button>' 
+  list += '<ul id="primaryNav" class="primaryNav">'
+  list += '<li><a href="/" title="Home page">Home</a></li>'
+  data.rows.forEach((row) => {
+      list += "<li>"
+      list +=
+          '<a href="/inv/type/' +
+          row.classification_id +
+          '" title="See our inventory of ' +
+          row.classification_name +
+          ' vehicles">' +
+          row.classification_name +
+          "</a>"
+      list +- "</li>"
+  })
+  list += "</ul>"
+  return list
 }
 
 
@@ -85,7 +90,20 @@ Util.buildVehicleHtml = async function(vehicle) {
       </div>
     `;
 };
-  
+
+
+/* ************************
+ * Constructs the dropdown HTML list
+ ************************** */
+Util.getClassTypes = async function(){
+  let data = await invModel.getClassifications()
+  let classifications
+  data.rows.forEach(classification => {
+    classifications += "<option value=\"" + classification.classification_id + "\">" + classification.classification_name + "</option>"
+  })
+  return classifications
+}
+
 
 /* ******************************
  * Middleware for Handling Errors

@@ -1,31 +1,40 @@
+<h1>Add Inventory</h1>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
 <div class="addinventory-container">
     <p>All fields are required.</p>
     <form id="addInventoryForm" action="/inv/addinventory" method="post">
         <fieldset>
             <label for="make">Make:</label>
-            <input type="text" name="inv_make" id="make" required value="<%= locals.inv_make %>">
+            <input type="text" name="inv_make" id="make" placeholder="Min of 3 Characters" minlength="3" maxlength="20" required value="<%= locals.inv_make %>">
             <label for="model">Model:</label>
-            <input type="text" name="inv_model" id="model" size="20" required value="<%= locals.inv_model %>">
+            <input type="text" name="inv_model" id="model" minlength="3" maxlength="20" placeholder="Min of 3 Characters" required value="<%= locals.inv_model %>">
             <label for="year">Year:</label>
-            <input type="number" name="inv_year" id="year" required value="<%= locals.inv_year %>">
+            <input type="number" name="inv_year" id="year" min="1900" max="2030" pattern="\d{4}" placeholder="4-digit year" required value="<%= locals.inv_year %>">
             <label for="description">Description</label>
-            <input type="text" name="inv_description" id="description" required value="<%= locals.inv_description %>">
+            <input type="text" name="inv_description" id="description" minlength="3" maxlength="200" required value="<%= locals.inv_description %>">
             <label for="image">Image URL</label>
-            <input type="text" name="inv_image" id="image" required value="<%= locals.inv_image %>">
+            <input type="text" name="inv_image" id="image" maxlength="30" value="/images/vehicles/no-image.png" required value="<%= locals.inv_image %>">
             <label for="thumbnail">Thumbnail URL</label>
-            <input type="text" name="inv_thumbnail" id="thumbnail" required value="<%= locals.inv_thumbnail %>">
+            <input type="text" name="inv_thumbnail" id="thumbnail" maxlength="30" value="/images/vehicles/no-image-tn.png" required value="<%= locals.inv_thumbnail %>">
             <label for="price">Price:</label>
-            <input type="number" name="inv_price" id="price" required value="<%= locals.inv_price %>">
-            <label for="miles">Miles:</label>
-            <input type="number" name="inv_miles" id="miles" required value="<%= locals.inv_miles %>">
-            <label for="color">Color:</label>
-            <input type="text" name="inv_color" id="color" required value="<%= locals.inv_color %>">
-            <label for="classification">Classification:</label>
-            <select name="classification_id" id="classification" required>
-                <% classifications.forEach(function(classification) { %>
-                    <option value="<%= classification.classification_id %>"><%= classification.classification_name %></option>
-                <% }); %>
-            </select>
+            <input type="number" name="inv_price" id="price" min="1" max="10000000" placeholder="decimal or integer" required value="<%= locals.inv_price %>">
+            <label for="miles">Miles:
+            <input type="number" name="inv_miles" id="miles" min="1" max="1000000" placeholder="digits only" required value="<%= locals.inv_miles %>"></label>
+            <label for="color">Color:
+            <input type="text" name="inv_color" id="color" required value="<%= locals.inv_color %>"></label>
+            <label for="classification">Select Classification:
+            <select type="classification" name="classification_id" required value="<%= locals.classification_id %>">
+                <%- classifications %>
+            </select></label>
+            <br>
             <button type="submit">Add Vehicle</button>
         </fieldset>
     </form>
