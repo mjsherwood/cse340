@@ -76,7 +76,8 @@ invCont.buildAddClassification = async (req, res, next) => {
     let nav = await Util.getNav();
     res.render('inventory/addclassification', {
         title: "Add Classification",
-        nav
+        nav,
+        errors: null
     });
 }
 
@@ -140,27 +141,27 @@ invCont.inputInventory = async (req, res) => {
  * ************************************/
 invCont.inputClassification = async (req, res) => {
     console.log("Is inputclass working?")
-    let nav = await Util.getNav()
     const { classification_name } = req.body
 
     const classResult = await invModel.inputClassification(
         classification_name
     )
+    let nav = await Util.getNav()
     if (classResult) {
         req.flash(
             "notice",
             `Congratulations, ${classification_name} Has been entered.`
             )
-            res.status(201).render("inventory/addclassification", {
+            res.status(201).render("inventory/management", {
                 title: "Add Classification",
                 nav,
+                errors: null
             })
     } else {
         req.flash("notice", "Sorry, submission failed. Please Try Again.")
         res.status(501).render("inventory/addclassification", {
             title: "Add Classification",
             nav,
-            errors: null,
         })
     }
 }

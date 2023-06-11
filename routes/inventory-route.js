@@ -22,8 +22,8 @@ router.post('/addinventory',
     Util.handleErrors(invController.inputInventory));
 
 router.post('/addclassification', 
-//classValidate.classificationRules(), 
-//classValidate.checkClassData, 
+    invValidate.classificationRules(), 
+    invValidate.checkClassData, 
 Util.handleErrors(invController.inputClassification));
 
 module.exports = router;

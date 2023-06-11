@@ -1,4 +1,5 @@
-const utilities = require(".")
+//const utilities = require(".")
+const utilities = require("../utilities/")
 const { body, validationResult } = require("express-validator")
 const invModel = require("../models/inventory-model")
 const validate = {}
@@ -130,6 +131,32 @@ validate.checkInvData = async (req, res, next) => {
       classifications
     });
   }
+}
+
+validate.classificationRules = () => {
+  return [
+    body("classification_name")
+      .trim()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a valid classification name."), // on error this message is sent.
+  ]
+}
+
+validate.checkClassData = async (req, res, next) => {
+  const { classification_name } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("./inventory/addclassification", {
+      errors,
+      title: "Add Classification",
+      nav,
+      classification_name,
+    })
+    return
+  }
+  next()
 }
 
 module.exports = validate

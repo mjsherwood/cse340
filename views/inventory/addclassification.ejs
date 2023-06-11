@@ -1,11 +1,20 @@
+<h1>Add Classification</h1>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
 <div class="addclassification-container">
     <p>All fields are required.</p>
     <form id="addClassificationForm" action="/inv/addclassification" method="post">
         <fieldset>
             <label for="classification">Make:</label>
             <input type="text" name="classification_name" id="classification" minlength="3" maxlength="20" pattern="[A-Z]+" placeholder="Please enter uppercase letters only" required value="<%= locals.classification_name %>">
-            </select>
-            <button type="submit">Add Classification</button>
+            <input class="submitBtn" type="submit" name="submitf" value="Add Classification">
         </fieldset>
     </form>
 </div>

@@ -49,15 +49,14 @@ async function inputInventory(inv_make, inv_model, inv_year, inv_description, in
 /* ***********************************
  * Add New Classification
  * *********************************** */
-async function inputClassification(classification_id){
+async function inputClassification(classification_name){
     try {
         const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *"
-        return await pool.query(sql, [classification_id])
+        return await pool.query(sql, [classification_name])
     } catch (error) {
         return error.message
     }
 }
-
 
 module.exports = {getClassifications, getVehiclesByClassificationID, getVehicleById, inputInventory, inputClassification };
 
