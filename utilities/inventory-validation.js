@@ -25,9 +25,8 @@ validate.addInventoryRules = () => {
       // valid year is required and must be a number
       body("inv_year")
         .trim()
-        .toInt()
-        .isInt({ min: 1900, max: 2300 })
-        .withMessage("Please provide a valid year."),
+        .isNumeric()
+        .withMessage("Valid price must be entered."),
 
       // valid description is required and must be a string
       body("inv_description")
@@ -50,9 +49,7 @@ validate.addInventoryRules = () => {
       // valid price must be entered and must be a number
       body("inv_price")
         .trim()
-        .isNumeric()
-        .toFloat()
-        .isFloat({ min: 0.01, max: 100000000 })
+        .isLength({ min: 1, max: 10 })
         .withMessage("Valid price must be entered."),
 
       // miles must be entered and it must be a number
@@ -158,6 +155,8 @@ validate.checkClassData = async (req, res, next) => {
   }
   next()
 }
+
+
 
 module.exports = validate
 

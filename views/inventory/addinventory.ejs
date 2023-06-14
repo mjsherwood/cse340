@@ -12,28 +12,28 @@
     <p>All fields are required.</p>
     <form class="site-form" id="addInventoryForm" action="/inv/addinventory" method="post">
         <fieldset>
-            <label for="make">Make:
-            <input type="text" name="inv_make" id="make" placeholder="Min of 3 Characters" minlength="3" maxlength="20" required value="<%= locals.inv_make %>"></label>
-            <label for="model">Model:
-            <input type="text" name="inv_model" id="model" minlength="3" maxlength="20" placeholder="Min of 3 Characters" required value="<%= locals.inv_model %>"></label>
-            <label for="year">Year:
-            <input type="number" name="inv_year" id="year" min="1900" max="2030" pattern="\d{4}" placeholder="4-digit year" required value="<%= locals.inv_year %>"></label>
-            <label for="description">Description
-            <input type="text" name="inv_description" id="description" placeholder="Min of 3 Characters" minlength="3" maxlength="200" required value="<%= locals.inv_description %>"></label>
-            <label for="image">Image URL
-            <input type="text" name="inv_image" id="image" maxlength="30" value="/images/vehicles/no-image.png" required value="<%= locals.inv_image %>"></label>
-            <label for="thumbnail">Thumbnail URL
-            <input type="text" name="inv_thumbnail" id="thumbnail" maxlength="30" value="/images/vehicles/no-image-tn.png" required value="<%= locals.inv_thumbnail %>"></label>
-            <label for="price">Price:
-            <input type="number" name="inv_price" id="price" min="1" max="10000000" placeholder="decimal or integer" required value="<%= locals.inv_price %>"></label>
-            <label for="miles">Miles:
-            <input type="number" name="inv_miles" id="miles" min="1" max="1000000" placeholder="digits only" required value="<%= locals.inv_miles %>"></label>
-            <label for="color">Color:
-            <input type="text" name="inv_color" id="color" placeholder="Min of 3 Characters" required value="<%= locals.inv_color %>"></label>
-            <label for="classification">Select Classification:
-            <select type="classification" name="classification_id" required value="<%= locals.classification_id %>">
+            <label for="make">Make:</label>
+            <input type="text" name="inv_make" id="make" placeholder="Min of 3 Characters" minlength="3" maxlength="20" required value="<%= locals.inv_make %>">
+            <label for="model">Model:</label>
+            <input type="text" name="inv_model" id="model" minlength="3" maxlength="20" placeholder="Min of 3 Characters" required value="<%= locals.inv_model %>">
+            <label for="year">Year:</label>
+            <input type="number" name="inv_year" id="year" min="1900" max="2030" placeholder="4-digit year" required value="<%= locals.inv_year %>">
+            <label for="description">Description</label>
+            <input type="text" name="inv_description" id="description" placeholder="Min of 3 Characters" minlength="3" maxlength="200" required value="<%= locals.inv_description %>">
+            <label for="image">Image URL</label>
+            <input type="text" name="inv_image" id="image" maxlength="30" value="/images/vehicles/no-image.png" required value="<%= locals.inv_price %>">
+            <label for="thumbnail">Thumbnail URL</label>
+            <input type="text" name="inv_thumbnail" id="thumbnail" maxlength="30" value="/images/vehicles/no-image-tn.png">
+            <label for="price">Price:</label>
+            <input type="number" name="inv_price" id="price" min="1" max="10000000" placeholder="decimal or integer" required value="<%= locals.inv_price %>">
+            <label for="miles">Miles:</label>
+            <input type="number" name="inv_miles" id="miles" min="1" max="1000000" placeholder="digits only" required value="<%= locals.inv_miles %>">
+            <label for="color">Color:</label>
+            <input type="text" name="inv_color" id="color" placeholder="Min of 3 Characters" required value="<%= locals.inv_color %>">
+            <label for="classification">Select Classification:</label>
+            <select name="classification_id">
                 <%- classifications %>
-            </select></label>
+            </select>
             <br>
             <button type="submit">Add Vehicle</button>
         </fieldset>

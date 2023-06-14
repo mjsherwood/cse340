@@ -1,14 +1,14 @@
 const Util = require("../utilities/")
 const accountModel = require('../models/account-model')
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 
 /* ************************************
  * Deliver Login View
  * ************************************/
 async function buildLogin(req, res, next) {
-    //const login_id = req.params.login_id;
-    //console.log('login_id:', login_id);
     let nav = await Util.getNav();  
     res.render('account/login', {
         title: "login",
@@ -20,8 +20,6 @@ async function buildLogin(req, res, next) {
  * Deliver Registration View
  * ************************************/
 async function buildRegistration(req, res, next) {
-    //const login_id = req.params.login_id;
-    //console.log('login_id:', login_id);
     let nav = await Util.getNav();  
     res.render('account/register', {
         title: "Register",
@@ -75,6 +73,78 @@ async function registerAccount(req, res) {
     }
 }
 
+/* ****************************************
+ *  Process login request
+ *  Unit 5, Login Process activity
+ * ************************************ */
+async function accountLogin(req, res) {
+    let nav = await Util.getNav()
+    const { account_email, account_password } = req.body
+    const accountData = await accountModel.getAccountByEmail(account_email)
+    if (!accountData) {
+     req.flash("notice", "Please check your credentials and try again.")
+     res.status(400).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      account_email,
+     })
+    return
+    }
+    try {
+     if (await bcrypt.compare(account_password, accountData.account_password)) {
+     delete accountData.account_password
+     const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+     res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+     return res.redirect("/account/")
+     }
+    } catch (error) {
+     return new Error('Access Forbidden')
+    }
+}
 
+/* ****************************************
+ *  Process login request
+ *  Unit 5, Login Process activity
+ * ************************************ */
+async function accountLogin(req, res) {
+    let nav = await Util.getNav()
+    const { account_email, account_password } = req.body
+    const accountData = await accountModel.getAccountByEmail(account_email)
+    if (!accountData) {
+     req.flash("notice", "Please check your credentials and try again.")
+     res.status(400).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      account_email,
+     })
+    return
+    }
+    try {
+     if (await bcrypt.compare(account_password, accountData.account_password)) {
+     delete accountData.account_password
+     const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+     res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+     return res.redirect("/account/")
+     }
+    } catch (error) {
+     return new Error('Access Forbidden')
+    }
+}
 
-module.exports = { buildLogin, buildRegistration, registerAccount }
+/* ************************************
+ * Deliver Account View
+ * ************************************/
+async function buildAccount(req, res, next) {
+    //const login_id = req.params.login_id;
+    //console.log('login_id:', login_id);
+    let nav = await Util.getNav();  
+    res.render('./account/account', {
+        title: "Account Management",
+        nav,
+        errors: null,
+});
+}
+
+module.exports = { buildLogin, buildRegistration, registerAccount, accountLogin, buildAccount }
