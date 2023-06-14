@@ -11,7 +11,7 @@ const env = require("dotenv").config()
 const app = express()
 const baseController = require("./controllers/base-controller.js")
 const accountRoute = require("./routes/accountRoute");
-const utilities = require('./utilities');
+const Util = require('./utilities');
 const errorController = require('./controllers/errorController')
 const session = require("express-session")
 const bodyParser = require("body-parser")
@@ -46,7 +46,7 @@ app.use(function(req, res, next){
 //Unit 5, Login activity
 app.use(cookieParser())
 //Unit 5, Login Process activity
-app.use(utilities.checkJWTToken)
+app.use(Util.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates
@@ -61,7 +61,7 @@ app.set("layout", "./layouts/layout") // not at views root
 app.use(require("./routes/static"))
 
 // Index route
-app.get("/", utilities.handleErrors(baseController.buildHome))
+app.get("/", Util.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", require("./routes/inventory-route"))
@@ -86,7 +86,7 @@ app.use(async (req, res, next) => {
  * Place after all other middleware
  * *********************** */
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
+  let nav = await Util.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
   if(err.status == 404){ message = err.message
   } 

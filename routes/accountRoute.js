@@ -21,6 +21,10 @@ router.post(
     Util.handleErrors(accountController.accountLogin)
 )
 
-router.get('/', Util.handleErrors(accountController.buildAccount));
+router.get(
+    '/',
+    Util.checkLogin, 
+    Util.handleErrors(accountController.buildAccount)
+);
 
 module.exports = router;

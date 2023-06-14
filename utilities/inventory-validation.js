@@ -1,5 +1,5 @@
 //const utilities = require(".")
-const utilities = require("../utilities/")
+const Util = require("../utilities/")
 const { body, validationResult } = require("express-validator")
 const invModel = require("../models/inventory-model")
 const validate = {}
@@ -99,7 +99,7 @@ validate.checkInvData = async (req, res, next) => {
           inv_color, 
           classification_id } = req.body;
   
-  let classifications = await utilities.getClassTypes();
+  let classifications = await Util.buildClassificationList();
   let errors = validationResult(req);
   let errorsArray = [];
   if (!errors.isEmpty()) {
@@ -110,7 +110,7 @@ validate.checkInvData = async (req, res, next) => {
     next(); // If there are no errors, move to the next middleware.
   } else {
     // If there are errors, render the error page.
-    let nav = await utilities.getNav();
+    let nav = await Util.getNav();
     res.render("inventory/addinventory", {
       errors,
       title: "Add Inventory",
@@ -144,7 +144,7 @@ validate.checkClassData = async (req, res, next) => {
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
+    let nav = await Util.getNav()
     res.render("./inventory/addclassification", {
       errors,
       title: "Add Classification",

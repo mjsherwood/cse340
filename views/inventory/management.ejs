@@ -1,3 +1,27 @@
-<a href="/inv/addclassification">Add New Classification</a></p>
-<a href="/inv/addinventory">Add New Vehicle</a></p>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+    
+    <%- messages() %>
+
+<ul>
+    <li><a href="/inv/addclassification" title="Click to add a new vehicle classification">Add New Classification</a></li>
+    <li><a href="/inv/addinventory" title="Click to add a new vehicle">Add New Vehicle</a></li>
+</ul>
+
+<h2>Manage Inventory</h2>
+<p>Choose a classification to see those inventory items.</p>
+
+<select id="classificationList">
+<%- classificationSelect %>
+</select>
+
+<table id="inventoryDisplay"></table>
+
+<noscript>Javascript must be enabled to use this page.</noscript>
+
+<script src="../../js/inventory.js"></script>
+
 <%- messages() %>

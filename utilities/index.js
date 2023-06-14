@@ -97,7 +97,7 @@ Util.buildVehicleHtml = async function(vehicle) {
 /* ************************
  * Constructs the dropdown HTML list
  ************************** */
-Util.getClassTypes = async function(){
+Util.buildClassificationList = async function(){
   let data = await invModel.getClassifications()
   let classifications
   data.rows.forEach(classification => {
@@ -113,6 +113,7 @@ Util.getClassTypes = async function(){
  * General Error Handling
  * ****************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
 
 /* ****************************************
 * Middleware to check token validity
@@ -134,6 +135,19 @@ Util.checkJWTToken = (req, res, next) => {
     })
   } else {
    next()
+  }
+}
+
+/* ****************************************
+* Middleware to check token validity
+* Unit 5 JWT Authorize activity
+**************************************** */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+   next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
   }
 }
 

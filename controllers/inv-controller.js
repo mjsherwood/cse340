@@ -10,7 +10,7 @@ invCont.buildByClassificationID = async function (req, res, next) {
     const classification_id = req.params.classificationID;
     console.log("Requested classification_id: ", classification_id);
     
-    const data = await invModel.getVehiclesByClassificationID(classification_id);
+    const data = await invModel.getInventoryByClassificationID(classification_id);
     console.log("Data: ", data);
     
     if (data && data.length > 0) {
@@ -49,7 +49,7 @@ invCont.getVehicleById = async (req, res, next) => {
  * ************************************/
 invCont.buildAddInv = async (req, res, next) => {
     let nav = await Util.getNav();  
-    let classifications = await Util.getClassTypes()
+    let classifications = await Util.buildClassificationList()
     res.render("inventory/addinventory", {
         title: "Add New Inventory",
         nav,
@@ -61,11 +61,13 @@ invCont.buildAddInv = async (req, res, next) => {
 /* ************************************
  * Deliver Management View
  * ************************************/
-invCont.buildManagement = async (req, res, next) => {
-    let nav = await Util.getNav();  
+invCont.buildManagementView = async (req, res, next) => {
+    let nav = await Util.getNav();
+    const classificationSelect = await Util.buildClassificationList()  
     res.render('inventory/management', {
-        title: "Management",
+        title: "Vehicle Management",
         nav,
+        classificationSelect
     });
 }
 
@@ -125,7 +127,7 @@ invCont.inputInventory = async (req, res) => {
         nav,
       })
     } else {
-      let classifications = await Util.getClassTypes()
+      let classifications = await Util.buildClassificationList()
       req.flash("notice", "Sorry, the new car creation failed.")
       res.status(501).render("inventory/add-Inventory", {
         title: "Add New Inventory",
@@ -165,6 +167,20 @@ invCont.inputClassification = async (req, res) => {
         })
     }
 }
+
+/* ***************************
+ * Return Inventory by Classification As JSON
+ * Week 5 - Select an Item from Inventory - Build A Controller Function
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+    const classification_id = parseInt(req.params.classification_id)
+    const invData = await invModel.getInventoryByClassificationID(classification_id)
+    if (invData[0].inv_id) {
+      return res.json(invData)
+    } else {
+      next(new Error("No data returned"))
+    }
+  }
 
 module.exports = invCont;
 

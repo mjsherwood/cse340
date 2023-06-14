@@ -10,7 +10,7 @@ router.get('/type/:classificationID', Util.handleErrors(invController.buildByCla
 // Route to build vehicle details page
 router.get('/detail/:id', Util.handleErrors(invController.getVehicleById));
 // Route to build Management Page
-router.get('/', Util.handleErrors(invController.buildManagement));
+router.get('/', Util.handleErrors(invController.buildManagementView));
 // Route to build add classification page
 router.get('/addinventory', Util.handleErrors(invController.buildAddInv));
 // Route to build add inventory page
@@ -25,5 +25,7 @@ router.post('/addclassification',
     invValidate.classificationRules(), 
     invValidate.checkClassData, 
 Util.handleErrors(invController.inputClassification));
+
+router.get("/getInventory/:classification_id", Util.handleErrors(invController.getInventoryJSON))
 
 module.exports = router;
