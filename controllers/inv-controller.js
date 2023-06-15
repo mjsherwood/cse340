@@ -198,13 +198,13 @@ invCont.getInventoryJSON = async (req, res, next) => {
   }
 
 /* ***************************
- * Build Edit Item View
+ * Build Edit Inventory View
  * Week 5 - Update Step 1 Activity
  * ************************** */
 invCont.editInventoryView = async function (req, res, next) {
     const inv_id = parseInt(req.params.inv_id)
     let nav = await Util.getNav()
-    const itemData = await invModel.getInventoryById(inv_id)
+    const itemData = await invModel.getVehicleById(inv_id)
     const classificationSelect = await Util.buildClassificationList(itemData.classification_id)
     const itemName = `${itemData.inv_make} ${itemData.inv_model}`
     res.render("./inventory/editInventory", {

@@ -28,6 +28,6 @@ Util.handleErrors(invController.inputClassification));
 
 router.get("/getInventory/:classification_id", Util.handleErrors(invController.getInventoryJSON));
 
-//router.get("/inv/edit/:id", Util.handleErrors(invController.editInventoryView));
+router.get("/edit/:inv_id", Util.handleErrors(invController.editInventoryView));
 
 module.exports = router;
