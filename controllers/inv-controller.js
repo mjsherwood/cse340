@@ -21,6 +21,7 @@ invCont.buildByClassificationID = async function (req, res, next) {
             title: className + " vehicles",
             nav,
             grid,
+            errors: null
         });
     } else {
         console.error('No data found for the given classification_id');
@@ -38,6 +39,7 @@ invCont.getVehicleById = async (req, res, next) => {
             title: `${vehicle.inv_make} ${vehicle.inv_model}`,
             vehicleHtml,
             nav,
+            errors: null
         });
     } catch (err) {
         next(err);
@@ -49,11 +51,11 @@ invCont.getVehicleById = async (req, res, next) => {
  * ************************************/
 invCont.buildAddInv = async (req, res, next) => {
     let nav = await Util.getNav();  
-    let classifications = await Util.buildClassificationList()
+    let classificationSelect = await Util.buildClassificationList()
     res.render("inventory/addinventory", {
         title: "Add New Inventory",
         nav,
-        classifications,
+        classificationSelect,
         errors: null
     })
 }
@@ -67,7 +69,8 @@ invCont.buildManagementView = async (req, res, next) => {
     res.render('inventory/management', {
         title: "Vehicle Management",
         nav,
-        classificationSelect
+        classificationSelect,
+        errors: null
     });
 }
 
@@ -138,13 +141,13 @@ console.log(
       nav,
     })
   } else {
-    let classifications = await Util.getClassTypes()
+    let classificationSelect = await Util.buildClassificationList()
     req.flash("notice", "Sorry, the new car creation failed.")
     res.status(501).render("inventory/add-Inventory", {
       title: "Add New Inventory",
       nav,
-      classifications,
-      errors
+      classificationSelect,
+      errors: null
     })
   }
 }

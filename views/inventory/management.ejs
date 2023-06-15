@@ -1,10 +1,12 @@
-<% if (title) { %>
-    <h1><%= title %></h1>
-    <% } else {
-        res.redirect('/')
-    } %>
-    
-    <%- messages() %>
+<h1>Management</h1>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
 
 <ul>
     <li><a href="/inv/addclassification" title="Click to add a new vehicle classification">Add New Classification</a></li>
@@ -14,9 +16,9 @@
 <h2>Manage Inventory</h2>
 <p>Choose a classification to see those inventory items.</p>
 
-<!--<select id="classificationList" for="classification">Select Classification:
-<%-// classificationSelect %>
-</select>
+<label for="classification">Select Classification:
+    <%- classificationSelect %>
+<br>
 
 <table id="inventoryDisplay"></table>
 

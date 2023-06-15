@@ -17,8 +17,8 @@ router.get('/addinventory', Util.handleErrors(invController.buildAddInv));
 router.get('/addclassification', Util.handleErrors(invController.buildAddClassification));
 
 router.post('/addinventory', 
-    //invValidate.addInventoryRules(), 
-    //invValidate.checkInvData, 
+    invValidate.addInventoryRules(), 
+    invValidate.checkInvData, 
     Util.handleErrors(invController.inputInventory));
 
 router.post('/addclassification', 
