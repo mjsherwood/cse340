@@ -87,61 +87,68 @@ invCont.buildAddClassification = async (req, res, next) => {
  * Input Inventory
  * ************************************/
 invCont.inputInventory = async (req, res) => {
-    let nav = await Util.getNav()
-    const { 
-      inv_make,
-      inv_model,
-      inv_description,
-      inv_image,
-      inv_thumbnail,
-      inv_price,
-      inv_year,
-      inv_miles,
-      inv_color,
-      classification_id
-    } = req.body
-  
+  let nav = await Util.getNav()
+  const { 
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+  } = req.body
 console.log(
-inv_year
+  "form data: ",
+  inv_make,
+  inv_model,
+  inv_year,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_miles,
+  inv_color,
+  classification_id
 )
+  const invResult = await invModel.inputInventory(
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
 
+  if (invResult) {
+    let nav = await  Util.getNav()
 
-    const invResult = await invModel.inputInventory(
-      
-      inv_make,
-      inv_model,
-      inv_description,
-      inv_image,
-      inv_thumbnail,
-      inv_price,
-      inv_year,
-      inv_miles,
-      inv_color,
-      classification_id
+    req.flash(
+      "notice",
+      `Congratulations, you\'ve made a new ${inv_make} ${inv_model}.`
     )
-  
-    if (invResult) {
-      let nav = await  Util.getNav()
-  
-      req.flash(
-        "notice",
-        `Congratulations, you\'ve made a new ${inv_make} ${inv_model}.`
-      )
-      res.status(201).render("inventory/management", {
-        title: "Inventory Management",
-        nav,
-      })
-    } else {
-      let classifications = await Util.buildClassificationList()
-      req.flash("notice", "Sorry, the new car creation failed.")
-      res.status(501).render("inventory/add-Inventory", {
-        title: "Add New Inventory",
-        nav,
-        classifications,
-        errors
-      })
-    }
+    res.status(201).render("inventory/management", {
+      title: "Inventory Management",
+      nav,
+    })
+  } else {
+    let classifications = await Util.getClassTypes()
+    req.flash("notice", "Sorry, the new car creation failed.")
+    res.status(501).render("inventory/add-Inventory", {
+      title: "Add New Inventory",
+      nav,
+      classifications,
+      errors
+    })
   }
+}
+
 
 /* ************************************
  * Input Classification

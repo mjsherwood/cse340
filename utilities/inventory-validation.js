@@ -156,7 +156,5 @@ validate.checkClassData = async (req, res, next) => {
   next()
 }
 
-
-
 module.exports = validate
 
