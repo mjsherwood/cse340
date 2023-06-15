@@ -31,9 +31,9 @@
             <label for="color">Color:</label>
             <input type="text" name="inv_color" id="color" placeholder="Min of 3 Characters" required value="<%= locals.inv_color %>">
             <label for="classification">Select Classification:</label>
-            <select name="classification_id">
-                <%- classifications %>
-            </select>
+            
+            <%- classifications %>
+           
             <br>
             <button type="submit">Add Vehicle</button>
         </fieldset>

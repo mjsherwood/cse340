@@ -17,8 +17,8 @@ router.get('/addinventory', Util.handleErrors(invController.buildAddInv));
 router.get('/addclassification', Util.handleErrors(invController.buildAddClassification));
 
 router.post('/addinventory', 
-    invValidate.addInventoryRules(), 
-    invValidate.checkInvData, 
+    //invValidate.addInventoryRules(), 
+    //invValidate.checkInvData, 
     Util.handleErrors(invController.inputInventory));
 
 router.post('/addclassification', 
@@ -26,6 +26,8 @@ router.post('/addclassification',
     invValidate.checkClassData, 
 Util.handleErrors(invController.inputClassification));
 
-router.get("/getInventory/:classification_id", Util.handleErrors(invController.getInventoryJSON))
+router.get("/getInventory/:classification_id", Util.handleErrors(invController.getInventoryJSON));
+
+//router.get("/inv/edit/:id", Util.handleErrors(invController.editInventoryView));
 
 module.exports = router;

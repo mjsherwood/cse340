@@ -99,10 +99,11 @@ Util.buildVehicleHtml = async function(vehicle) {
  ************************** */
 Util.buildClassificationList = async function(){
   let data = await invModel.getClassifications()
-  let classifications
+  let classifications = '<select name="classification_id">'
   data.rows.forEach(classification => {
-    classifications += "<option value=\"" + classification.classification_id + "\">" + classification.classification_name + "</option>"
-  })
+    classifications += '<option value="' + classification.classification_id + '">' + classification.classification_name + "</option>"
+  }) 
+  classifications += '</select>'
   return classifications
 }
 
