@@ -21,23 +21,23 @@
             <label for="description">Description</label>
             <input type="text" name="inv_description" id="description" placeholder="Min of 3 Characters" minlength="3" maxlength="200" required value="<%= locals.inv_description %>">
             <label for="image">Image URL</label>
-            <input type="text" name="inv_image" id="image" maxlength="60" value="/images/vehicles/no-image.png">
+            <input type="text" name="inv_image" id="image" maxlength="60" required value="<%= locals.inv_image %>">
             <label for="thumbnail">Thumbnail URL</label>
-            <input type="text" name="inv_thumbnail" id="thumbnail" maxlength="60" value="/images/vehicles/no-image-tn.png">
+            <input type="text" name="inv_thumbnail" id="thumbnail" maxlength="60" required value="<%= locals.inv_thumbnail %>">
             <label for="price">Price:</label>
             <input type="number" name="inv_price" id="price" min="1" max="10000000" placeholder="integer" required value="<%= locals.inv_price %>">
             <label for="miles">Miles:</label>
             <input type="number" name="inv_miles" id="miles" min="1" max="1000000" placeholder="digits only" required value="<%= locals.inv_miles %>">
             <label for="color">Color:</label>
             <input type="text" name="inv_color" id="color" placeholder="Min of 3 Characters" required value="<%= locals.inv_color %>">
-            <label for="classification">Select Classification:</label>
+            <label for="classificationList">Select Classification:</label>
              <%- classificationSelect %>
             <br>
-            <button id="updateButton" type="submit" disabled>Update Vehicle</button>
             <input type="hidden" name="inv_id"
             <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
             <% } %>>
         </fieldset>
+        <button id="updateButton" type="submit" disabled>Update Vehicle</button>
     </form>
     
 </div>

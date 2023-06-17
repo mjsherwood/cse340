@@ -47,9 +47,9 @@ Util.buildClassificationGrid = async function(data){
             + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model
             + 'details"><img src="' + vehicle.inv_thumbnail
             +'" alt="Image of'+ vehicle.inv_make + ' ' + vehicle.inv_model
-            +' on CSE Motors" /></a>'
+            +' on CSE Motors"></a>'
             grid += '<div class="namePrice">'
-            grid += '<hr />'
+            grid += '<hr>'
             grid += '<h2>'
             grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View '
             + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
@@ -61,6 +61,7 @@ Util.buildClassificationGrid = async function(data){
             grid += '</li>'
         })
         grid += '</ul>'
+        grid += '</div>'
     } else {
         grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
     }
@@ -78,7 +79,7 @@ Util.buildVehicleHtml = async function(vehicle) {
     return `
       <div class="vehicle">
         <div class="vehicle-image">
-          <img src="${inv_image}" alt="${inv_make} ${inv_model}" />
+          <img src="${inv_image}" alt="${inv_make} ${inv_model}">
         </div>
         <div class="vehicle-details">
           <h2>(${inv_year}) ${inv_make} ${inv_model}</h2>
@@ -95,13 +96,22 @@ Util.buildVehicleHtml = async function(vehicle) {
 
 
 /* ************************
- * Constructs the dropdown HTML list
+ * Constructs the dropdown Classification list
  ************************** */
-Util.buildClassificationList = async function(){
+Util.buildClassificationList = async function(currentClassificationId = null){
   let data = await invModel.getClassifications()
   let classifications = '<select name="classification_id" id="classificationList">'
+  if (currentClassificationId === null) {
+    classifications +=  '<option value="none" selected disabled hidden>Choose here</option>'
+  } else {
+    classifications +=  '<option value="none" disabled hidden>Choose here</option>'
+  }
   data.rows.forEach(classification => {
-    classifications += '<option id="classificationList" value="' + classification.classification_id + '">' + classification.classification_name + "</option>"
+    if (classification.classification_id === currentClassificationId) {
+      classifications += '<option value="' + classification.classification_id + '" selected>' + classification.classification_name + "</option>"
+    } else {
+      classifications += '<option value="' + classification.classification_id + '">' + classification.classification_name + "</option>"
+    }
   }) 
   classifications += '</select>'
   return classifications

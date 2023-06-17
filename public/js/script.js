@@ -13,7 +13,7 @@ x.onclick = toggleMenu;
 var currentYear = new Date().getFullYear();
 
 // Set the year in the footer
-document.querySelector("#year").innerHTML = currentYear;
+document.querySelector("#copyright").innerHTML = currentYear;
 
 // Get the last modified date of the index.html file
 //var lastModified = document.lastModified;

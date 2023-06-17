@@ -30,10 +30,10 @@
             <input type="number" name="inv_miles" id="miles" min="1" max="1000000" placeholder="digits only" required value="<%= locals.inv_miles %>"></label>
             <label for="color">Color:
             <input type="text" name="inv_color" id="color" placeholder="Min of 3 Characters" required value="<%= locals.inv_color %>"></label>
-            <label for="classification">Select Classification:
+            <label for="classificationList">Select Classification:</label>
              <%- classificationSelect %>
             <br>
-            <button>Add Vehicle</button>
         </fieldset>
+        <button>Add Vehicle</button>
     </form>
 </div>
