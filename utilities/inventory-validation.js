@@ -130,6 +130,56 @@ validate.checkInvData = async (req, res, next) => {
   }
 }
 
+
+/* ******************************
+ * Check data and return errors or continue to inventory submission
+ * Unit 5 - Update an Inventory Item (Step 2)
+ * ****************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const { inv_id,
+          inv_make,
+          inv_model, 
+          inv_year, 
+          inv_description, 
+          inv_image, 
+          inv_thumbnail, 
+          inv_price, 
+          inv_miles, 
+          inv_color, 
+          classification_id } = req.body;
+  
+  let classifications = await Util.buildClassificationList();
+  let errors = validationResult(req);
+  let errorsArray = [];
+  if (!errors.isEmpty()) {
+    errorsArray = errors.array();
+  }
+
+  if(errorsArray.length === 0) {
+    next(); // If there are no errors, move to the next middleware.
+  } else {
+    // If there are errors, render the error page.
+    let nav = await Util.getNav();
+    res.render("inventory/editInventory", {
+      errors,
+      title: "Update Inventory",
+      nav,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image, 
+      inv_thumbnail, 
+      inv_price, 
+      inv_miles, 
+      inv_color, 
+      classification_id,
+      classifications
+    });
+  }
+}
+
 validate.classificationRules = () => {
   return [
     body("classification_name")
