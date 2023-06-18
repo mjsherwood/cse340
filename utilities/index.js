@@ -163,6 +163,26 @@ Util.checkLogin = (req, res, next) => {
   }
 }
 
+/* ****************************************
+* Middleware to check account type
+* Unit 5 Assignment
+**************************************** */
+Util.checkAccountType = (req, res, next) => {
+  if (res.locals.loggedin && res.locals.accountData) {
+    const accountType = res.locals.accountData.account_type;
+    if (accountType == 'Employee' || accountType == 'Admin') {
+      next();
+    } else {
+      const error = new Error('Access denied');
+      error.status = 403;
+      next(error);
+    }
+  } else {
+    const error = new Error('Not authenticated');
+    error.status = 401;
+    next(error);
+  }
+};
 
 module.exports = {
     ...Util,

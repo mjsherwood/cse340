@@ -86,22 +86,30 @@ app.use(async (req, res, next) => {
  * Place after all other middleware
  * *********************** */
 app.use(async (err, req, res, next) => {
-  let nav = await Util.getNav()
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){ message = err.message
-  } 
-  else if (err.status == 500) {
-    message = "Intentional 500 Error"
+  let nav = await Util.getNav();
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+  
+  let status = err.status || 500;
+  let message;
+
+  if (status == 404) {
+    message = err.message;
+  } else if (status == 500) {
+    message = "Intentional 500 Error";
+  } else if (status == 401) {
+    message = "Not authenticated.";
+  } else if (status == 403) {
+    message = "Access denied.";
   } else {
-    message = "Server Error"
+    message = "Server Error";
   }
 
-  res.render("errors/error", {
-    title: err.status || 'Server Error',
+  res.status(status).render("errors/error", {
+    title: status,
     message,
     nav
-  })
-})
+  });
+});
 
 /* ***********************
  * Local Server Information
