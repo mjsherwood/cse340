@@ -27,4 +27,25 @@ router.get(
     Util.handleErrors(accountController.buildAccount)
 );
 
+//Logout route - Week 5 Assignment
+router.get('/logout', (req, res) => {
+    res.clearCookie('jwt');
+    res.redirect('/account/login');
+});
+
+//Account route - Week 5 Assignment
+router.get('/account', Util.checkLogin, async (req, res, next) => {
+    try {
+        let nav = await Util.getNav();
+        res.render('account', {
+            title: 'Account',
+            nav,
+            accountData: res.locals.accountData
+        });
+    } catch (err) {
+        next(err);
+    }
+});
+
+
 module.exports = router;

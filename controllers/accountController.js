@@ -108,8 +108,7 @@ async function accountLogin(req, res) {
  * Deliver Account View
  * ************************************/
 async function buildAccount(req, res, next) {
-    //const login_id = req.params.login_id;
-    //console.log('login_id:', login_id);
+    const login_id = req.params.login_id;
     let nav = await Util.getNav();  
     res.render('./account/account', {
         title: "Account Management",

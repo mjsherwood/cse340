@@ -1,8 +1,14 @@
 <header id="top-header">
-    <div class="header-logo">
-      <img src="/images/site/cse_motors.png" alt="CSE Motors" class="logo">
-    </div>
-    <div class="tools">
+  <div class="header-logo">
+    <img src="/images/site/cse_motors.png" alt="CSE Motors" class="logo">
+  </div>
+  <div class="tools">
+    <% if (locals.loggedin) { %>
+      <a title="Click to navigate to the account management view" href="/account/">Welcome <%= accountData.account_firstname %></a>
+      &nbsp;
+      <a title="Click to log out" href="/account/logout">| Logout</a>
+    <% } else { %>
       <a title="Click to log in" href="/account/login">My Account</a>
-    </div>
+    <% } %>
+  </div>
 </header>

@@ -68,6 +68,7 @@ Util.buildClassificationGrid = async function(data){
     return grid
 }
 
+
 /* ****************************************
  * Build vehicle pdp
  * **************************************** */
