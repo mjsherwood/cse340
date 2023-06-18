@@ -1,0 +1,25 @@
+<h1><%= title %></h1>
+<%- messages() %>
+<h2>Account Update</h2>
+<form class="site-form" action="/account/update" method="post">
+    <fieldset>
+        <input type="hidden" name="accountId" value="<%= accountData.id %>">
+        <label for="firstName">First Name:</label><br>
+        <input type="text" id="firstName" name="firstName" value="<%= accountData.account_firstname %>" required><br>
+        <label for="lastName">Last Name:</label><br>
+        <input type="text" id="lastName" name="lastName" value="<%= accountData.account_lastname %>" required><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="<%= accountData.account_email %>" required><br>
+        <input type="submit" value="Update Account">
+    </fieldset>
+</form>
+<h2>Change Password</h2>
+<p>By entering a new password, your current password will be changed. Password must be at least 8 characters and contain at least one number and one special character.</p>
+<form class="site-form" action="/account/update/password" method="post">
+        <fieldset>
+        <input type="hidden" name="accountId" value="<%= accountData.id %>">
+        <label for="password">New Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Change Password">
+    </fieldset>
+</form>

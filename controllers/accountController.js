@@ -2,6 +2,7 @@ const Util = require("../utilities/")
 const accountModel = require('../models/account-model')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const db = require('../database/index.js');
 require("dotenv").config()
 
 
@@ -117,4 +118,22 @@ async function buildAccount(req, res, next) {
 });
 }
 
-module.exports = { buildLogin, buildRegistration, registerAccount, accountLogin, buildAccount }
+/* ************************************
+ * Get Account Data
+ * Week 5 - Assignment
+ * ************************************/
+async function getAccountData(id) {
+    try {
+        const result = await db.query("SELECT * FROM account WHERE account_id = $1", [id]);
+        if(result.rows.length > 0) {
+            return result.rows[0];
+        } else {
+            throw new Error("No account found with this id");
+        }
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
+module.exports = { buildLogin, buildRegistration, registerAccount, accountLogin, buildAccount, getAccountData }

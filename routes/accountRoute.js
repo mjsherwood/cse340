@@ -30,11 +30,13 @@ router.get(
 //Logout route - Week 5 Assignment
 router.get('/logout', (req, res) => {
     res.clearCookie('jwt');
-    res.redirect('/account/login');
+    res.redirect('/');
 });
 
 //Account route - Week 5 Assignment
-router.get('/account', Util.checkLogin, async (req, res, next) => {
+router.get('/account', 
+    Util.checkLogin, 
+    async (req, res, next) => {
     try {
         let nav = await Util.getNav();
         res.render('account', {
@@ -46,6 +48,24 @@ router.get('/account', Util.checkLogin, async (req, res, next) => {
         next(err);
     }
 });
+
+//Account Update route - Week 5 Assignment
+router.get('/update/:id', 
+    Util.checkLogin, async (req, res, next) => {
+    try {
+        let nav = await Util.getNav();
+        const accountData = await accountController.getAccountData(req.params.id);
+        res.render('account/updateAccount', 
+        { title: 'Update Account', 
+        accountData,
+        nav,
+        error: null
+        });
+    } catch(err) {
+        next(err);
+    }
+});
+
 
 
 module.exports = router;
