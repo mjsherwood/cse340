@@ -209,21 +209,48 @@ const updateAccount = async function (req, res, next) {
   }
   
 
-
-
 /* ************************************
  * Update Password
  * Week 5 - Assignment
  * ************************************/
-const updatePassword = async (req, res, next) => {
+const updatePassword = async function (req, res, next) {
+    let nav = await Util.getNav()
+    // Hash the password before storing
+    let hashedPassword
     try {
-        let nav = await Util.getNav();
-        const accountData = await accountModel.updatePassword(req.params.id, req.body.newPassword);
-        res.render('account', { title: 'Account', accountData, nav, message: 'Password updated successfully!' });
-    } catch(err) {
-        next(err);
+        // regular password and cost (salt is generated automatically)
+        hashedPassword = await bcrypt.hashSync(req.body.account_password, 10)
+    } catch (error) {
+        req.flash("notice", 'Sorry, there was an error changing the password.')
+        return res.status(500).render("account/updateAccount", {
+            title: "Account Update",
+            nav,
+            errors: null,
+        })
     }
-};
+
+    const {
+        account_id,
+    } = req.body
+    const updateResult = await accountModel.updatePassword(
+        hashedPassword,
+        account_id
+    )
+  
+    if (updateResult) {
+      //const accountFirstName = updateResult.account_firstname
+      req.flash("notice", `The password was successfully updated.`)
+      res.redirect("/account/")
+    } else {
+      //const accountName = `${account_firstname}`
+      req.flash("notice", "Sorry, the update failed.")
+      res.status(501).render("account/updateAccount", {
+      title: "Account Update",
+      nav,
+      errors: null,
+      })
+    }
+}
 
 
 module.exports = { 

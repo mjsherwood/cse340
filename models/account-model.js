@@ -73,16 +73,23 @@ async function updateAccount(
 * Update Password
 * Unit 5 Activity
 * ***************************** */
-const updatePassword = async (id, newPassword) => {
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  const client = await pool.connect();
+async function updatePassword(
+  account_id,
+  account_password
+) {
   try {
-      const result = await pool.query('UPDATE account SET password = $1 WHERE account_id = $2 RETURNING *', [hashedPassword, id]);
-      return result.rows[0];
-  } finally {
-      client.release();
+    console.log(account_id, account_password)
+    const sql =
+      "UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING *"
+    const data = await pool.query(sql, [
+      account_id,
+      account_password
+    ])
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
   }
-};
+}
 
 module.exports = { 
     registerAccount, 
