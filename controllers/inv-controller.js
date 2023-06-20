@@ -223,7 +223,7 @@ invCont.updateInventory = async function (req, res, next) {
 invCont.inputClassification = async (req, res) => {
     console.log("Is inputclass working?")
     const { classification_name } = req.body
-
+    let classificationSelect = await Util.buildClassificationList()
     const classResult = await invModel.inputClassification(
         classification_name
     )
@@ -236,6 +236,7 @@ invCont.inputClassification = async (req, res) => {
             res.status(201).render("inventory/management", {
                 title: "Add Classification",
                 nav,
+                classificationSelect,
                 errors: null
             })
     } else {
@@ -243,6 +244,8 @@ invCont.inputClassification = async (req, res) => {
         res.status(501).render("inventory/addclassification", {
             title: "Add Classification",
             nav,
+            classificationSelect,
+            errors: null
         })
     }
 }

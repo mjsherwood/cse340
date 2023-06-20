@@ -6,8 +6,13 @@ const accountController = require('../controllers/accountController')
 const regValidate = require('../utilities/account-validation')
 
 //Routes
-router.get('/login', Util.handleErrors(accountController.buildLogin));
-router.get('/register', Util.handleErrors(accountController.buildRegistration));
+//Login Route
+router.get('/login', 
+    Util.handleErrors(accountController.buildLogin));
+//Register Route
+router.get('/register', 
+    Util.handleErrors(accountController.buildRegistration));
+//Route to Post Registration    
 router.post('/register', 
     regValidate.registrationRules(), 
     regValidate.checkRegData, 
