@@ -62,23 +62,20 @@ validate.loginRules = () => {
             if (!emailExists){
             throw new Error("Sorry we do not have that username.")
             }
-        }),
-  
+        }),  
       // password is required and must not be empty
-      //body("account_password")
-      //  .trim()
-      //  .isStrongPassword({
-      //    minLength: 12,
-      //    minLowercase: 1,
-      //    minUppercase: 1,
-      //    minNumbers: 1,
-      //    minSymbols: 1,
-      //  })
-      //  .withMessage("Password does not meet requirements."),
+      body("account_password")
+        .trim()
+        .isStrongPassword({
+          minLength: 12,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+        })
+        .withMessage("Password does not meet requirements."),
     ]
 }
-
-
 
 
 /* ******************************
@@ -134,7 +131,7 @@ validate.updateAccount = async (req, res, next) => {
     let nav = await Util.getNav()
     res.render("account/updateAccount", {
       errors,
-      title: "Registration",
+      title: "Account Update",
       nav,
       account_firstname,
       account_lastname,
@@ -143,6 +140,25 @@ validate.updateAccount = async (req, res, next) => {
     return
   }
   next()
+}
+
+/* ******************************
+* Check data and return errors for password update
+* ***************************** */
+validate.updatePassword = () => {
+  return [
+    // password is required and must meet complexity requirements
+    body("account_password")
+      .trim()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
+  ]
 }
 
 

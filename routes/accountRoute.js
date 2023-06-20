@@ -46,13 +46,13 @@ router.get('/update/:id',
 //Update account information - Week 5 Assignment
 router.post('/update/', 
     Util.checkLogin, 
-    //regValidate.UpdateAccount, 
+    regValidate.updateAccount, 
     Util.handleErrors(accountController.updateAccount));
 
 //Update password - Week 5 Assignment
 router.post('/update/password/', 
     Util.checkLogin, 
-    //Util.validatePassword, 
+    regValidate.updatePassword, 
     Util.handleErrors(accountController.updatePassword));
 
 
