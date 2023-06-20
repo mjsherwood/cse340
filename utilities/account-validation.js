@@ -46,7 +46,7 @@ validate.registrationRules = () => {
         })
         .withMessage("Password does not meet requirements."),
     ]
-  }
+}
 
 validate.loginRules = () => {
     return [
@@ -81,9 +81,9 @@ validate.loginRules = () => {
 
 
 
- /* ******************************
- * Check data and return errors or continue to registration
- * ***************************** */
+/* ******************************
+* Check data and return errors or continue to registration
+* ***************************** */
 validate.checkRegData = async (req, res, next) => {
     const { account_firstname, account_lastname, account_email } = req.body
     let errors = []
@@ -101,23 +101,49 @@ validate.checkRegData = async (req, res, next) => {
       return
     }
     next()
-  }
+}
 
-  validate.checkLoginData = async (req, res, next) => {
-    const { account_email } = req.body
-    let errors = []
-    errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      let nav = await Util.getNav()
-      res.render("account/login", {
-        errors,
-        title: "Login",
-        nav,
-        account_email,
-      })
-      return
-    }
-    next()
+/* ******************************
+* Check data and return errors for login
+* ***************************** */
+validate.checkLoginData = async (req, res, next) => {
+  const { account_email } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await Util.getNav()
+    res.render("account/login", {
+      errors,
+      title: "Login",
+      nav,
+      account_email,
+    })
+    return
   }
-  
-  module.exports = validate
+  next()
+}
+
+/* ******************************
+* Check data and return errors for account update
+* ***************************** */
+validate.updateAccount = async (req, res, next) => {
+  const { account_firstname, account_lastname, account_email } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await Util.getNav()
+    res.render("account/updateAccount", {
+      errors,
+      title: "Registration",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+    return
+  }
+  next()
+}
+
+
+module.exports = validate

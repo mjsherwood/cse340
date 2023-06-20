@@ -42,5 +42,52 @@ async function getAccountByEmail (account_email) {
 }
 
 
+/* *****************************
+* Update Account
+* Unit 5 Activity
+* ***************************** */
+async function updateAccount(
+  account_id,
+  account_firstname,
+  account_lastname,
+  account_email
+) {
+  try {
+    console.log(account_id, account_firstname, account_lastname, account_email)
+    const sql =
+      "UPDATE account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *"
+    const data = await pool.query(sql, [
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    ])
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
+  }
+}
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail }
+
+/* *****************************
+* Update Password
+* Unit 5 Activity
+* ***************************** */
+const updatePassword = async (id, newPassword) => {
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  const client = await pool.connect();
+  try {
+      const result = await pool.query('UPDATE account SET password = $1 WHERE account_id = $2 RETURNING *', [hashedPassword, id]);
+      return result.rows[0];
+  } finally {
+      client.release();
+  }
+};
+
+module.exports = { 
+    registerAccount, 
+    checkExistingEmail, 
+    getAccountByEmail,
+    updateAccount,
+    updatePassword
+}

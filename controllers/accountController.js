@@ -136,4 +136,105 @@ async function getAccountData(id) {
     }
 };
 
-module.exports = { buildLogin, buildRegistration, registerAccount, accountLogin, buildAccount, getAccountData }
+
+/* ************************************
+ * Get Account Data
+ * Week 5 - Assignment
+ * ************************************/
+const buildAccountView = async (req, res, next) => {
+    try {
+        let nav = await Util.getNav();
+        res.render('account', {
+            title: 'Account',
+            nav,
+            accountData: res.locals.accountData
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+/* ************************************
+ * Get Account Data
+ * Week 5 - Assignment
+ * ************************************/
+const buildUpdateAccountView = async (req, res, next) => {
+    try {
+        let nav = await Util.getNav();
+        const accountData = await getAccountData(req.params.id);
+        res.render('account/updateAccount', { title: 'Update Account', accountData, nav, error: null });
+    } catch(err) {
+        next(err);
+    }
+};
+
+
+/* ************************************
+ * Update Account Data
+ * Week 5 - Assignment
+ * ************************************/
+const updateAccount = async function (req, res, next) {
+    let nav = await Util.getNav()
+    const {
+        account_id,
+        account_firstname,
+        account_lastname,
+        account_email,
+    } = req.body
+    const updateResult = await accountModel.updateAccount(
+        account_id,
+        account_firstname,
+        account_lastname,
+        account_email,
+    )
+  
+    if (updateResult) {
+      const accountFirstName = updateResult.account_firstname
+      req.flash("notice", `The account for ${accountFirstName} was successfully updated.`)
+      res.redirect("/account/")
+    } else {
+      const accountName = `${account_firstname}`
+      req.flash("notice", "Sorry, the update failed.")
+      res.status(501).render("account/updateAccount", {
+      title: "Account Update for:" + accountName,
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+      })
+    }
+  }
+  
+
+
+
+/* ************************************
+ * Update Password
+ * Week 5 - Assignment
+ * ************************************/
+const updatePassword = async (req, res, next) => {
+    try {
+        let nav = await Util.getNav();
+        const accountData = await accountModel.updatePassword(req.params.id, req.body.newPassword);
+        res.render('account', { title: 'Account', accountData, nav, message: 'Password updated successfully!' });
+    } catch(err) {
+        next(err);
+    }
+};
+
+
+module.exports = { 
+    buildLogin, 
+    buildRegistration, 
+    registerAccount, 
+    accountLogin, 
+    buildAccount, 
+    getAccountData, 
+    buildAccountView, 
+    buildUpdateAccountView,
+    updateAccount,
+    updatePassword
+}

@@ -36,36 +36,24 @@ router.get('/logout', (req, res) => {
 //Account route - Week 5 Assignment
 router.get('/account', 
     Util.checkLogin, 
-    async (req, res, next) => {
-    try {
-        let nav = await Util.getNav();
-        res.render('account', {
-            title: 'Account',
-            nav,
-            accountData: res.locals.accountData
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+    Util.handleErrors(accountController.buildAccountView));
 
 //Account Update route - Week 5 Assignment
 router.get('/update/:id', 
-    Util.checkLogin, async (req, res, next) => {
-    try {
-        let nav = await Util.getNav();
-        const accountData = await accountController.getAccountData(req.params.id);
-        res.render('account/updateAccount', 
-        { title: 'Update Account', 
-        accountData,
-        nav,
-        error: null
-        });
-    } catch(err) {
-        next(err);
-    }
-});
+    Util.checkLogin, 
+    Util.handleErrors(accountController.buildUpdateAccountView));
 
+//Update account information - Week 5 Assignment
+router.post('/update/', 
+    Util.checkLogin, 
+    //regValidate.UpdateAccount, 
+    Util.handleErrors(accountController.updateAccount));
+
+//Update password - Week 5 Assignment
+router.post('/update/password/', 
+    Util.checkLogin, 
+    //Util.validatePassword, 
+    Util.handleErrors(accountController.updatePassword));
 
 
 module.exports = router;
