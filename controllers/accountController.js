@@ -15,6 +15,7 @@ async function buildLogin(req, res, next) {
         title: "login",
         nav,
         errors: null,
+        account_email: '',
     });
 }
 
@@ -84,24 +85,34 @@ async function accountLogin(req, res) {
     const { account_email, account_password } = req.body
     const accountData = await accountModel.getAccountByEmail(account_email)
     if (!accountData) {
-     req.flash("notice", "Please check your credentials and try again.")
-     res.status(400).render("account/login", {
-      title: "Login",
-      nav,
-      errors: null,
-      account_email,
-     })
-    return
+        req.flash("notice", "Please check your credentials and try again.")
+        res.status(400).render("account/login", {
+            title: "Login",
+            nav,
+            errors: null,
+            account_email,
+        })
+        return
+    }
+    const validPassword = await bcrypt.compare(account_password, accountData.account_password)
+    if (!validPassword) {
+        req.flash("notice", "Invalid password. Please try again.")
+        res.status(401).render("account/login", {
+            title: "Login",
+            nav,
+            errors: null,
+            account_email,
+        })
+        return
     }
     try {
-     if (await bcrypt.compare(account_password, accountData.account_password)) {
-     delete accountData.account_password
-     const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
-     res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
-     return res.redirect("/account/")
-     }
+        delete accountData.account_password
+        const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+        return res.redirect("/account/")
     } catch (error) {
-     return new Error('Access Forbidden')
+        console.log(error);
+        return res.status(500).send("Internal server error");
     }
 }
 
