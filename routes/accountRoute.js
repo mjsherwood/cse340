@@ -52,7 +52,7 @@ router.post('/update/',
 //Update password - Week 5 Assignment
 router.post('/update/password/', 
     Util.checkLogin, 
-    regValidate.updatePassword, 
+    regValidate.updatePassword(), 
     Util.handleErrors(accountController.updatePassword));
 
 

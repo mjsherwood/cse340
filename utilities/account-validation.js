@@ -158,6 +158,13 @@ validate.updatePassword = () => {
         minSymbols: 1,
       })
       .withMessage("Password does not meet requirements."),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      next();
+    },
   ]
 }
 
