@@ -48,6 +48,10 @@ validate.registrationRules = () => {
     ]
 }
 
+
+/*  **********************************
+ *  Login Validation Rules
+ * ********************************* */
 validate.loginRules = () => {
     return [
       // valid email is required and cannot already exist in the DB

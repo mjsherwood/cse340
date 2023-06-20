@@ -180,6 +180,10 @@ validate.checkUpdateData = async (req, res, next) => {
   }
 }
 
+/* ******************************
+ * Check data for classification
+ * Unit 5 - Assignment
+ * ****************************** */
 validate.classificationRules = () => {
   return [
     body("classification_name")
@@ -189,6 +193,10 @@ validate.classificationRules = () => {
   ]
 }
 
+/* ******************************
+ * Check data for Add Classification
+ * Unit 5 - Assignment
+ * ****************************** */
 validate.checkClassData = async (req, res, next) => {
   const { classification_name } = req.body
   let errors = []

@@ -24,10 +24,10 @@
             <label for="year">Year:</label>
             <input type="text" readonly <% if(locals.inv_price) { %>
             value="<%= locals.inv_price %>" <% } %>> 
-            <button type="delete">Delete Vehicle</button>
             <input type="hidden" name="inv_id"
             <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
             <% } %>>
         </fieldset>
+        <button type="delete">Delete Vehicle</button>
     </form>
 </div>

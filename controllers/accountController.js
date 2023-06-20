@@ -249,11 +249,9 @@ const updatePassword = async function (req, res, next) {
     )
   
     if (updateResult) {
-      //const accountFirstName = updateResult.account_firstname
       req.flash("notice", `The password was successfully updated.`)
       res.redirect("/account/")
     } else {
-      //const accountName = `${account_firstname}`
       req.flash("notice", "Sorry, the update failed.")
       res.status(501).render("account/updateAccount", {
       title: "Account Update",

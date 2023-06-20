@@ -9,9 +9,11 @@ const regValidate = require('../utilities/account-validation')
 //Login Route
 router.get('/login', 
     Util.handleErrors(accountController.buildLogin));
+
 //Register Route
 router.get('/register', 
     Util.handleErrors(accountController.buildRegistration));
+
 //Route to Post Registration    
 router.post('/register', 
     regValidate.registrationRules(), 
@@ -23,14 +25,13 @@ router.post(
     '/login',
     regValidate.loginRules(),
     regValidate.checkLoginData,
-    Util.handleErrors(accountController.accountLogin)
-)
+    Util.handleErrors(accountController.accountLogin));
 
+// Route to Account Page
 router.get(
     '/',
     Util.checkLogin, 
-    Util.handleErrors(accountController.buildAccount)
-);
+    Util.handleErrors(accountController.buildAccount));
 
 //Logout route - Week 5 Assignment
 router.get('/logout', (req, res) => {

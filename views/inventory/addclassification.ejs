@@ -12,9 +12,9 @@
     <p>All fields are required.</p>
     <form class="site-form" id="addClassificationForm" action="/inv/addclassification" method="post">
         <fieldset>
-            <label for="classification">Make:
-            <input type="text" name="classification_name" id="classification" minlength="3" maxlength="20" pattern="[A-Z]+" placeholder="Please enter uppercase letters only" required value="<%= locals.classification_name %>"></label>
-            <button type="submit" name="classificationBtn" value="Add Classification">Submit Classification</button>
+            <label for="classification">Make:</label>
+            <input type="text" name="classification_name" id="classification" minlength="3" maxlength="20" pattern="[A-Z]+" placeholder="Please enter uppercase letters only" required value="<%= locals.classification_name %>">
         </fieldset>
+        <button type="submit" name="classificationBtn" value="Add Classification">Submit Classification</button>
     </form>
 </div>
