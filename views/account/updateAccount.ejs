@@ -1,5 +1,9 @@
 <h1><%= title %></h1>
-<%- messages() %>
+<% if(errors) { %>
+    <% errors.array().forEach(function(error) { %>
+        <p><%= error.msg %></p>
+    <% }) %>
+<% } %>
 <h2>Account Update</h2>
 <form class="site-form" action="/account/update/" method="post">
     <fieldset>
