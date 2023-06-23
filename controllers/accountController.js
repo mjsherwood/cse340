@@ -191,16 +191,18 @@ const updateAccount = async function (req, res, next) {
         account_id,
         account_firstname,
         account_lastname,
-        account_email,
+        account_email
     } = req.body
     const updateResult = await accountModel.updateAccount(
         account_id,
         account_firstname,
         account_lastname,
-        account_email,
+        account_email
     )
   
-    if (updateResult) {
+    const errors = validationResult(req);
+
+    if (updateResult && errors.isEmpty()) {
       const accountFirstName = updateResult.account_firstname
       req.flash("notice", `The account for ${accountFirstName} was successfully updated.`)
       res.redirect("/account/")
@@ -210,14 +212,14 @@ const updateAccount = async function (req, res, next) {
       res.status(501).render("account/updateAccount", {
       title: "Account Update for:" + accountName,
       nav,
-      errors: null,
+      errors,
       account_id,
       account_firstname,
       account_lastname,
       account_email,
       })
     }
-  }
+}
   
 
 /* ************************************
