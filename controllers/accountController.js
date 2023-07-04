@@ -1,5 +1,6 @@
 const Util = require("../utilities/")
 const accountModel = require('../models/account-model')
+const messageModel = require('../models/message-model')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const db = require('../database/index.js');
@@ -120,14 +121,23 @@ async function accountLogin(req, res) {
  * Deliver Account View
  * ************************************/
 async function buildAccount(req, res, next) {
-    const login_id = req.params.login_id;
+    console.log("buildAccount function called");
+    const login_id = res.locals.accountData.account_id;
+    console.log('Login ID: ', login_id);
+
     let nav = await Util.getNav();  
+    let unreadMessageCount = await messageModel.getUnreadMessageCount(login_id);
+    console.log('Unread Message Count: ', unreadMessageCount);
+
     res.render('./account/account', {
         title: "Account Management",
         nav,
+        unreadMessageCount,
         errors: null,
-});
+    });
 }
+
+
 
 /* ************************************
  * Get Account Data
@@ -152,18 +162,19 @@ async function getAccountData(id) {
  * Get Account Data
  * Week 5 - Assignment
  * ************************************/
-const buildAccountView = async (req, res, next) => {
+async function buildAccountView(req, res, next) {
+    console.log("buildAccountView function called");
     try {
-        let nav = await Util.getNav();
-        res.render('account', {
-            title: 'Account',
-            nav,
-            accountData: res.locals.accountData
-        });
+        const accountData = await accountModel.getAccount(req.user.account_id);
+        console.log(`Account data: ${JSON.stringify(accountData)}`);
+        const unreadMessageCount = await messageModel.countUnreadMessages(req.user.account_id);
+        console.log(`Unread message count: ${unreadMessageCount}`);
+        res.render('account', { title: "Account", accountData });
     } catch (err) {
+        console.error(err);
         next(err);
     }
-};
+}
 
 
 /* ************************************
@@ -269,10 +280,10 @@ module.exports = {
     buildRegistration, 
     registerAccount, 
     accountLogin, 
-    buildAccount, 
-    getAccountData, 
+    buildAccount,
     buildAccountView, 
+    getAccountData, 
     buildUpdateAccountView,
     updateAccount,
-    updatePassword
+    updatePassword,
 }

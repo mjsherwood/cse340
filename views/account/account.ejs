@@ -10,7 +10,14 @@
 
 <p><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a></p>
 
+<!--Here is the adddition for module 6 assignment-->
+<h2>Message Center</h3>
+<ul>
+  <li>You have <%= typeof unreadMessageCount !== 'undefined' ? unreadMessageCount : 0 %> unread messages</li>
+  <li><a href="/inbox">Go to Inbox</a></li>
+</ul>
+
 <% if (accountData.account_type == 'Employee' || accountData.account_type == 'Admin') { %>
-  <h3>Inventory Management</h3>
+  <h2>Inventory Management</h3>
   <p><a href="/inv">Manage Inventory</a></p>
 <% } %>

@@ -1,0 +1,33 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } %>
+
+<p><b>Subject:</b> <%= messageData.message_subject %></p>
+<p><b>From:</b> <%= messageData.account_firstname %> <%= messageData.account_lastname %></p>
+<pre><b>Message:</b> <%= messageData.message_body %></pre>
+  
+  <hr>
+  
+  <li><a href="/inbox">Return to Inbox</a></li>
+  
+  <form id="replyForm" action="/reply" method="GET">
+    <input id="messageIdInput" type="hidden" name="message_id" value="<%= messageData.message_id %>">
+    <button type="submit">Reply</button>
+  </form>
+  
+  <form action="/read/<%= messageData.message_id %>" method="POST">
+    <input type="hidden" name="message_id" value="<%= messageData.message_id %>">
+    <button type="submit">Mark as Read</button>
+  </form>
+  
+  <form action="/archive/<%= messageData.message_id %>" method="POST">
+    <input type="hidden" name="message_id" value="<%= messageData.message_id %>">
+    <button type="submit">Archive Message</button>
+  </form>
+  
+  <form action="/delete/<%= messageData.message_id %>" method="POST">
+    <input type="hidden" name="message_id" value="<%= messageData.message_id %>">
+    <button type="submit">Delete Message</button>
+  </form>
+
+  <script src="/js/messages.js"></script>

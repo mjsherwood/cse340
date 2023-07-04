@@ -1,0 +1,36 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+  <% } else {
+    res.redirect('/')
+  } %>
+  
+  <%- messages() %>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Received</th>
+        <th>Subject</th>
+        <th>From</th>
+        <th>Read</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% (archivedMessages || []).forEach(function(message) { %>
+        <tr>
+          <td><%= message.message_created %></td>
+          <td><a href="/read/<%= message.message_id %>"><%= message.message_subject %></a></td>
+          <td><%= message.message_from %></td>
+          <td><%= message.message_read ? 'Yes' : 'No' %></td>
+          <td>
+            <form action="/delete/<%= message.message_id %>" method="POST">
+              <input type="hidden" name="message_id" value="<%= message.message_id %>">
+              <button type="submit">Delete Message</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  
+  <p><a href="/inbox">Back to Inbox</a></p>

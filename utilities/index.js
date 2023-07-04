@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accountModel = require("../models/account-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require('dotenv').config()
@@ -182,6 +183,11 @@ Util.checkAccountType = (req, res, next) => {
     error.status = 401;
     next(error);
   }
+};
+
+Util.getAccountData = async function(login_id) {
+  const accountData = await accountModel.getAccountById(login_id);
+  return accountData;
 };
 
 module.exports = {

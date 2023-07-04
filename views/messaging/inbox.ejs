@@ -1,0 +1,31 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+  
+<ul>
+  <li><a href="/newmessage/<%= accountData.account_id %>">Create New Message</a></li>
+  <li><a href="/archivedmessages/<%= accountData.account_id %>">View <%= archivedMessages ? archivedMessages.length : 0 %> Archived Messages</a></li>
+</ul>
+  
+<table>
+  <thead>
+    <tr>
+      <th>Received</th>
+      <th>Subject</th>
+      <th>From</th>
+      <th>Read</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% messageData.forEach(message => { %>
+      <tr>
+        <td><%= message.message_created %></td>
+        <td><a href="/read/<%= message.message_id %>"><%= message.message_subject %></a></td>
+        <td><%= message.account_firstname %> <%= message.account_lastname %></td>
+        <td><%= message.message_read ? 'Yes' : 'No' %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

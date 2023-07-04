@@ -17,6 +17,7 @@ const session = require("express-session")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const pool = require('./database/')
+const messageRoute = require("./routes/messageRoute");
 
 
 /* ************************
@@ -34,7 +35,7 @@ app.use(session({
 }))
 
 app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({ extended: true }))
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
@@ -69,6 +70,9 @@ app.use("/inv", require("./routes/inventory-route"))
 
 // Account routes
 app.use("/account", require("./routes/accountRoute"))
+
+// Message routes
+app.use("/", messageRoute);
 
 /* ***********************
  * Error Routes

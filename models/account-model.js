@@ -91,10 +91,41 @@ async function updatePassword(
   }
 }
 
+/* *****************************
+* Return account data using account id
+* ***************************** */
+async function getAccountById (account_id) {
+  try {
+    const result = await pool.query(
+      'SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account WHERE account_id = $1',
+      [account_id])
+    return result.rows[0]
+  } catch (error) {
+    return new Error("No matching account found")
+  }
+}
+
+/* *****************************
+* Return all accounts
+* ***************************** */
+async function getAllAccounts() {
+  try {
+      const result = await pool.query(
+          'SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account'
+      );
+      return result.rows;
+  } catch (error) {
+      return new Error("Error retrieving accounts");
+  }
+}
+
+
 module.exports = { 
     registerAccount, 
     checkExistingEmail, 
     getAccountByEmail,
     updateAccount,
-    updatePassword
+    updatePassword,
+    getAccountById,
+    getAllAccounts
 }
