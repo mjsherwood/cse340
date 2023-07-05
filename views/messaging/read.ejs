@@ -9,25 +9,22 @@
   <hr>
   
   <li><a href="/inbox">Return to Inbox</a></li>
-  
-  <form id="replyForm" action="/reply" method="GET">
-    <input id="messageIdInput" type="hidden" name="message_id" value="<%= messageData.message_id %>">
+
+  <form class="site-form" id="replyForm" action="/reply/<%= messageData.message_id %>" method="GET">
     <button type="submit">Reply</button>
   </form>
   
-  <form action="/read/<%= messageData.message_id %>" method="POST">
+  <form class="site-form" action="/read/<%= messageData.message_id %>" method="POST">
     <input type="hidden" name="message_id" value="<%= messageData.message_id %>">
     <button type="submit">Mark as Read</button>
   </form>
   
-  <form action="/archive/<%= messageData.message_id %>" method="POST">
+  <form class="site-form" action="/archive/<%= messageData.message_id %>" method="POST">
     <input type="hidden" name="message_id" value="<%= messageData.message_id %>">
     <button type="submit">Archive Message</button>
   </form>
   
-  <form action="/delete/<%= messageData.message_id %>" method="POST">
+  <form class="site-form" action="/delete/<%= messageData.message_id %>" method="POST">
     <input type="hidden" name="message_id" value="<%= messageData.message_id %>">
     <button type="submit">Delete Message</button>
   </form>
-
-  <script src="/js/messages.js"></script>

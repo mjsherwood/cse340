@@ -371,3 +371,50 @@ nav ul li {
   color: var(--dark-knight);
   font-family: 'Roboto Condensed', sans-serif;
 }
+
+.site-form input,
+.site-form select,
+.site-form textarea {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  border: 1px solid var(--silver-screen);
+  width: 100%;
+}
+
+.site-form input:invalid,
+.site-form select:invalid,
+.site-form textarea:invalid {
+  border: 1px solid lightcoral;
+  background: #ffe5e5;
+}
+
+.site-form input:valid,
+.site-form select:valid,
+.site-form textarea:valid {
+  border: 1px solid limegreen;
+  background: #f0fdf0;
+}
+
+/******* Email Table ***********************/
+.emailTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.emailTable th {
+  background-color: var(--dark-knight);
+  color: white;
+  padding: 10px;
+}
+
+.emailTable td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.emailTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

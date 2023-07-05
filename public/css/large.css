@@ -125,3 +125,18 @@ body .vehicle-description {
 .site-form {
     max-width: 300px;
 }
+
+/******* Email Tables ****************/
+.emailTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px 0; 
+}
+
+.emailTable td {
+    padding: 10px; 
+}
+
+.emailTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

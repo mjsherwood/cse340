@@ -7,22 +7,20 @@
   <h1>Message</h1>
   <p>This is an internal system only. Recipients are limited to the three generic accounts.</p>
   
-  <form action="/newmessage/<%= accountData.account_id %>" method="POST">
-  
-    <label for="to">To:</label>
-    <select name="to" id="to">
-      <% recipients.forEach(function(recipient) { %>
-        <option value="<%= recipient.account_id %>"><%= recipient.account_firstname %></option>
-      <% }); %>
-    </select>
-  
-    <label for="subject">Subject:</label>
-    <input type="text" id="subject" name="subject" required>
-  
-    <label for="message_body">Message:</label>
-    <textarea id="message_body" name="message_body" required></textarea>
-  
-    <input type="submit" value="Send">
+  <form class="site-form" action="/newmessage/<%= accountData.account_id %>" method="POST">
+    <fieldset>
+      <label for="to">To:</label>
+      <select name="to" id="to">
+        <% recipients.forEach(function(recipient) { %>
+          <option value="<%= recipient.account_id %>"><%= recipient.account_firstname %></option>
+        <% }); %>
+      </select>
+      <label for="subject">Subject:</label>
+      <input type="text" id="subject" name="subject" required>
+      <label for="message_body">Message:</label>
+      <textarea type="text" id="message_body" name="message_body" required></textarea>
+    </fieldset>
+    <button type="submit">Send</button>
   </form>
   
   <p><a href="/inbox">Back to Inbox</a></p>

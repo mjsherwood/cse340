@@ -52,11 +52,6 @@ router.post('/delete/:message_id',
     Util.checkLogin,
     Util.handleErrors(messageController.deleteMessage));
 
-// Route to display the reply form
-router.get('/reply/:message_id',
-    Util.checkLogin,
-    Util.handleErrors(messageController.buildReplyForm));
-
 // Route to send the reply
 router.post('/reply/:message_id', 
     Util.checkLogin, 

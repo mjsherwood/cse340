@@ -52,12 +52,27 @@ async function archiveMessage(message_id) {
 /* ************************************
  * Retrieve archived messages by user ID
  * ************************************/
-async function getArchivedMessages(user_id) {
+// async function getArchivedMessages(user_id) {
+//     try {
+//         const sql = "SELECT * FROM messages WHERE message_to = $1 AND message_archived = true ORDER BY message_created DESC"
+//         const result = await pool.query(sql, [user_id]);
+//         return result.rows;
+//     } catch (error) {
+//         return error.message;
+//     }
+// }
+async function getArchivedMessages(account_id) {
     try {
-        const sql = "SELECT * FROM messages WHERE message_to = $1 AND message_archived = true ORDER BY message_created DESC"
-        const result = await pool.query(sql, [user_id]);
+        const sql = `
+            SELECT messages.*, account.account_firstname, account.account_lastname
+            FROM messages 
+            JOIN account ON account.account_id = messages.message_from
+            WHERE messages.message_to = $1 AND messages.message_archived = true
+        `;
+        const result = await pool.query(sql, [account_id]);
         return result.rows;
     } catch (error) {
+        console.error(error);
         return error.message;
     }
 }

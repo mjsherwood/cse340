@@ -9,20 +9,12 @@ async function buildInbox(req, res, next) {
     console.log("Building inbox...");
     try {
         const login_id = res.locals.accountData.account_id;
-        console.log("Login ID: " + login_id);
         let nav = await Util.getNav();
-        console.log("Nav: ", nav);
         let accountData = await Util.getAccountData(login_id);
-        console.log("Account Data: ", accountData);
         let messageResult = await messageModel.getMessagesByUser(login_id);
-        console.log("Message Result: ", messageResult);
         let archivedMessageResult = await messageModel.getArchivedMessages(login_id);
-        let archivedMessages = archivedMessageResult;
-        console.log("Archived Message Data: ", archivedMessages);   
-
+        let archivedMessages = archivedMessageResult; 
         let messageData = Array.isArray(messageResult) ? messageResult : [];
-
-        console.log("Message Data: ", messageData);
 
         for(let message of messageData) {
             message.message_created = new Date(message.message_created).toLocaleString();
@@ -90,21 +82,26 @@ async function createMessage(req, res, next) {
  * Build the archived messages view
  * ************************************/
 async function buildArchivedMessages(req, res, next) {
-    const login_id = req.params.login_id;
-    let nav = await Util.getNav();
-    let accountData = await Util.getAccountData(login_id);
-    let archivedMessages = await messageModel.getArchivedMessages(login_id);
+    try {
+        const login_id = req.params.login_id;
+        let nav = await Util.getNav();
+        let accountData = await Util.getAccountData(login_id);
+        let archivedMessages = await messageModel.getArchivedMessages(login_id);
+        for(let message of archivedMessages) {
+            message.message_created = new Date(message.message_created).toLocaleString();
+        }
 
-    for(let message of archivedMessages) {
-        message.message_created = new Date(message.message_created).toLocaleString();
-    }
-
-    res.render('./messaging/archivedmessages', {
-        title: `${accountData.account_firstname} Client Inbox - Archived Messages`,
-        archivedMessages,
-        nav,
-        errors: null,
-    });
+        res.render('./messaging/archivedmessages', {
+            title: `${accountData.account_firstname}'s Archived Messages`,
+            archivedMessages,
+            accountData,
+            nav,
+            errors: null,
+        });
+    } catch(err) {
+        console.error(err);
+        next(err);
+    }  
 }
 
 /* ************************************
@@ -143,7 +140,7 @@ async function buildReplyMessage(req, res, next) {
     let nav = await Util.getNav();
     let messageData = await messageModel.getMessage(message_id);
     res.render('./messaging/reply', {
-        title: "Reply to: " + messageData.message_subject,
+        title: "Reply to: " + messageData.account_firstname + " " + messageData.account_lastname,
         nav,
         messageData,
         errors: null
@@ -180,19 +177,6 @@ async function deleteMessage(req, res, next) {
     return res.redirect(`/inbox`);
 }
 
-/* ************************************
- * Build Reply Message View
- * ************************************/
-async function buildReplyForm(req, res, next) {
-    try {
-        const messageData = await messageModel.getMessage(req.params.message_id);
-        console.log(`Message To: ${messageData.message_to}`);
-        console.log(`Message From: ${messageData.message_from}`);
-        res.render('messaging/reply', { title: 'Reply Message', messageData: messageData, accountData: req.session.accountData });
-    } catch (err) {
-        next(err);
-    }
-}
 
 /* ************************************
  * Send the reply message
@@ -203,16 +187,13 @@ async function sendReply(req, res, next) {
 
         // get the original message content
         const originalMessage = await messageModel.getMessage(message_id);
-        
-        // We need to ensure that originalMessage.message_body contains the correct data.
-        console.log('Original Message Body: ', originalMessage.message_body);
 
         // concatenate original message and the reply message
         const formattedMessageBody = 'Original Message:\r\n\r\n' + originalMessage.message_body + '\r\n\r\nReply:\r\n\r\n' + message_body;
 
         // create the reply message
         await messageModel.createMessage(`Re: ${message_subject}`, formattedMessageBody, message_from, message_to);
-        res.redirect(`/inbox`);
+        res.redirect(`/inbox/`);
     } catch (err) {
         next(err);
     }
@@ -255,7 +236,6 @@ module.exports = {
     updateMessageToRead,
     archiveMessage,
     deleteMessage,
-    buildReplyForm,
     sendReply,
     getMessageById
 }
