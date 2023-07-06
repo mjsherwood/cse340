@@ -71,9 +71,20 @@ async function createMessage(req, res, next) {
         let message_body = messageData.message_body;
         let message_to = messageData.to;
         let message_from = login_id;
-        await messageModel.createMessage(message_subject, message_body, message_from, message_to);
-        res.redirect(`/inbox/${login_id}`);
+        console.log("About to call createMessage model function.");
+        const result = await messageModel.createMessage(message_subject, message_body, message_from, message_to);
+        console.log("createMessage model function returned:", result);
+        if (result.rowCount > 0) {
+            req.flash('notice', 'Congratulations, your message was sent successfully.');
+            console.log('Message sent successfully.');
+            res.redirect(`/inbox`);
+        } else {
+            req.flash('notice', 'Sorry, the message sending failed.');
+            console.log('Message sending failed.');
+            res.redirect(`/newmessage/${login_id}`);
+        }
     } catch (err) {
+        console.error("Error in createMessage function:", err);
         next(err);
     }
 }
@@ -153,7 +164,14 @@ async function buildReplyMessage(req, res, next) {
 async function updateMessageToRead(req, res, next) {
     let login_id = res.locals.account_id;
     const message_id = req.params.message_id;
-    await messageModel.updateMessageToRead(message_id);
+    const result = await messageModel.updateMessageToRead(message_id);
+    
+    if (result.rowCount > 0) {
+        req.flash('notice', 'Message marked as read successfully.');
+    } else {
+        req.flash('notice', 'Failed to mark message as read.');
+    }
+    
     return res.redirect(`/inbox`);
 }
 
@@ -163,7 +181,14 @@ async function updateMessageToRead(req, res, next) {
 async function archiveMessage(req, res, next) {
     let login_id = res.locals.account_id;
     const message_id = req.params.message_id;
-    await messageModel.archiveMessage(message_id);
+    const result = await messageModel.archiveMessage(message_id);
+    
+    if (result.rowCount > 0) {
+        req.flash('notice', 'Message archived successfully.');
+    } else {
+        req.flash('notice', 'Failed to archive message.');
+    }
+    
     return res.redirect(`/inbox`);
 }
 
@@ -173,7 +198,14 @@ async function archiveMessage(req, res, next) {
 async function deleteMessage(req, res, next) {
     let login_id = res.locals.account_id;
     const message_id = req.params.message_id;
-    await messageModel.deleteMessage(message_id);
+    const result = await messageModel.deleteMessage(message_id);
+    
+    if (result.rowCount > 0) {
+        req.flash('notice', 'Message deleted successfully.');
+    } else {
+        req.flash('notice', 'Failed to delete message.');
+    }
+    
     return res.redirect(`/inbox`);
 }
 
@@ -184,17 +216,19 @@ async function deleteMessage(req, res, next) {
 async function sendReply(req, res, next) {
     try {
         const { message_subject, message_body, message_from, message_to, message_id } = req.body;
-
-        // get the original message content
         const originalMessage = await messageModel.getMessage(message_id);
-
-        // concatenate original message and the reply message
         const formattedMessageBody = 'Original Message:\r\n\r\n' + originalMessage.message_body + '\r\n\r\nReply:\r\n\r\n' + message_body;
+        const result = await messageModel.createMessage(`Re: ${message_subject}`, formattedMessageBody, message_from, message_to);
 
-        // create the reply message
-        await messageModel.createMessage(`Re: ${message_subject}`, formattedMessageBody, message_from, message_to);
+        if (result.rowCount > 0) {
+            req.flash('notice', 'Reply sent successfully.');
+        } else {
+            req.flash('notice', 'Failed to send reply.');
+        }
+
         res.redirect(`/inbox/`);
     } catch (err) {
+        req.flash('notice', `Error: ${err.message}`);
         next(err);
     }
 }

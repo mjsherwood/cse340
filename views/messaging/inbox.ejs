@@ -3,6 +3,7 @@
 <% } else {
     res.redirect('/')
 } %>
+<%- messages() %>
   
 <ul>
   <li><a href="/newmessage/<%= accountData.account_id %>">Create New Message</a></li>

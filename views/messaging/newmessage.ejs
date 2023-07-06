@@ -3,6 +3,7 @@
   <% } else {
     res.redirect('/')
   } %>
+  <%- messages() %>
   
   <h1>Message</h1>
   <p>This is an internal system only. Recipients are limited to the three generic accounts.</p>
@@ -16,9 +17,9 @@
         <% }); %>
       </select>
       <label for="subject">Subject:</label>
-      <input type="text" id="subject" name="subject" required>
+      <input type="text" id="subject" name="subject" maxlength="100" minlength="3" required>
       <label for="message_body">Message:</label>
-      <textarea type="text" id="message_body" name="message_body" required></textarea>
+      <textarea id="message_body" name="message_body" minlength="3" maxlength="750" required></textarea>
     </fieldset>
     <button type="submit">Send</button>
   </form>

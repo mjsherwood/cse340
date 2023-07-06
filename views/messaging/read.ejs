@@ -1,6 +1,9 @@
 <% if (title) { %>
   <h1><%= title %></h1>
-<% } %>
+<% } else {
+  res.redirect('/')
+} %>
+<%- messages() %>
 
 <p><b>Subject:</b> <%= messageData.message_subject %></p>
 <p><b>From:</b> <%= messageData.account_firstname %> <%= messageData.account_lastname %></p>

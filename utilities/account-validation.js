@@ -135,21 +135,21 @@ validate.updateAccount = [
     .withMessage("Please provide a first name."), 
 
   // lastname is required and must be string
-  body("account_lastname")
-    .trim()
-    .isLength({ min: 2 })
-    .withMessage("Please provide a last name."),
-  // email is required and must not already exist.
   body("account_email")
     .trim()
     .isEmail()
     .normalizeEmail() 
     .withMessage("A valid email is required.")
-    .custom(async (account_email) => {
+    .custom(async (account_email, { req }) => {
+        const currentAccount = await accountModel.getAccountById(req.params.login_id);
+        if (currentAccount.account_email === account_email) {
+            return true;
+        }
         const emailExists = await accountModel.checkExistingEmail(account_email);
         console.log('Email exists:', emailExists);
+
         if (emailExists){
-        throw new Error("Email exists. Please log in or use different email");
+            throw new Error("Email exists. Please log in or use different email");
         }
     }),
 
@@ -170,6 +170,8 @@ validate.updateAccount = [
     next();
   }
 ]
+
+
 /* ******************************
 * Check data and return errors for password update
 * ***************************** */

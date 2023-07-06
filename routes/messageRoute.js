@@ -5,6 +5,7 @@ const Util = require('../utilities/');
 const accountController = require('../controllers/accountController');
 const messageController = require('../controllers/messageController');
 const regValidate = require('../utilities/account-validation');
+const messValidate = require('../utilities/message-validation');
 
 // Route to inbox
 router.get('/inbox', 
@@ -12,7 +13,7 @@ router.get('/inbox',
     Util.checkLogin, 
     Util.handleErrors(messageController.buildInbox));
 
-// Route to create a new message
+// Route to create a new message page
 router.get('/newmessage/:login_id',
     Util.checkLogin,
     Util.handleErrors(messageController.buildNewMessage));
@@ -20,6 +21,8 @@ router.get('/newmessage/:login_id',
 // Route to post a new message
 router.post('/newmessage/:login_id',
     Util.checkLogin,
+    messValidate.messageRules(),
+    messValidate.checkMessageData,
     Util.handleErrors(messageController.createMessage));
 
 // Route to view archived messages
