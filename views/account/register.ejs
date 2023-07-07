@@ -1,3 +1,13 @@
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+
 <div class="registration-container">
     <p>All fields are required.</p>
     <form class="site-form" id="registerForm" action="/account/register" method="post">
@@ -16,11 +26,3 @@
         </fieldset>
     </form>
 </div>
-<%- messages() %>
-<% if (errors) { %>
-    <ul class="notice">
-   <% errors.array().forEach(error => { %>
-     <li><%= error.msg %></li>
-  <%  }) %>
-   </ul>
-  <% } %>

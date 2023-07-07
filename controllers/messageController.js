@@ -51,7 +51,8 @@ async function buildNewMessage(req, res, next) {
             title: 'Create New Message',
             nav,
             accountData,
-            recipients
+            recipients,
+            errors: null,
         });
 
     } catch(err) {
@@ -134,7 +135,7 @@ async function buildReadMessage(req, res, next) {
             nav,
             messageData,
             senderName,
-            errors: null
+            errors: null,
         });
     } catch (error) {
         console.error(error);
@@ -154,7 +155,7 @@ async function buildReplyMessage(req, res, next) {
         title: "Reply to: " + messageData.account_firstname + " " + messageData.account_lastname,
         nav,
         messageData,
-        errors: null
+        errors: null,
     });
 }
 

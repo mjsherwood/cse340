@@ -24,23 +24,22 @@ validate.messageRules = () => {
 * Check data and return errors or continue to sending message
 * ***************************** */
 validate.checkMessageData = async (req, res, next) => {
-    const { subject, message_body } = req.body;
-    let errors = [];
-    errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      let nav = await Util.getNav();
-      let recipients = await accountModel.getAllAccounts();
-      res.render("messaging/newmessage", {
-        errors,
-        title: "New Message",
-        nav,
-        subject,
-        message_body,
-        recipients,
-      });
-      return;
-    }
-    next();
+  const { subject, message_body } = req.body;
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await Util.getNav();
+    let recipients = await accountModel.getAllAccounts();
+    res.render("messaging/newmessage", {
+      errors: errors.array(),
+      title: "New Message",
+      nav,
+      subject,
+      message_body,
+      recipients,
+    });
+    return;
+  }
+  next();
 }
 
 module.exports = validate;

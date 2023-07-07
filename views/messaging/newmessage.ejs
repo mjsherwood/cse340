@@ -4,6 +4,14 @@
     res.redirect('/')
   } %>
   <%- messages() %>
+
+  <% if (errors) { %>
+    <ul class="notice">
+   <% errors.forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
   
   <h1>Message</h1>
   <p>This is an internal system only. Recipients are limited to the three generic accounts.</p>

@@ -4,6 +4,14 @@
     res.redirect('/')
   } %>
   <%- messages() %>
+
+  <% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
   
   <p><b>Subject:</b> <%= messageData.message_subject %></p>
   <p><b>From:</b> <%= messageData.account_firstname %> <%= messageData.account_lastname %></p>
